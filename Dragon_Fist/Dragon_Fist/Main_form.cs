@@ -167,7 +167,7 @@ namespace Dragon_Fist
             }
             else
             {
-                MessageBox.Show("apktool Not Found", "Error");
+                MessageBox.Show("[Error Code = 0x10]\n\napktool Not Found\n\nPlease check apktool.jar", "Error");
             }
         }
 
@@ -194,14 +194,14 @@ namespace Dragon_Fist
 
                 listView2.Items.Add("Dumping...");
                 String dump_direc = apk_path + "\\" + apk_name + "_dump" + "_" + select_platform;
-                if (!Directory.Exists(dump_direc)) { MessageBox.Show(this, "Not found directory", "Error"); return; }
+                if (!Directory.Exists(dump_direc)) { MessageBox.Show(this, "[Error Code = 0x12]\n\nNot found directory", "Error"); return; }
                 ProcessStartInfo proInfo_il2cpp = Set_Process("cmd", dump_direc, false);
                 String cmd_il2cppdumper_str = "\"" + Application.StartupPath + "\\Modules\\Il2CppDumper\\Il2CppDumper.exe\" ";
                 cmd_il2cppdumper_str += "\"" + metadata + "\" " + "\"" + il2cpp + "\" " + level0;
                 Run_process(proInfo_il2cpp, cmd_il2cppdumper_str, false);
                 if (!File.Exists(@dump_path + "\\dump.cs"))
                 {
-                    listView2.Items.Add("Fail to Dump APK, the dumped file is not found");
+                    listView2.Items.Add("[Error Code = 0x00] Fail to Dump APK, the dumped file is not found");
                 }
                 else
                 {
@@ -210,7 +210,7 @@ namespace Dragon_Fist
             }
             else
             {
-                MessageBox.Show(this, "Il2CppDumper Not Found", "Error");
+                MessageBox.Show(this, "[Error Code = 0x11]\n\nIl2CppDumper Not Found\n\nPlease check Il2", "Error");
             }
         }
 
@@ -324,7 +324,7 @@ namespace Dragon_Fist
                         {
                             if (manifest_path == null)
                             {
-                                MessageBox.Show(this, "AndroidManifest.xml path ERROR", "Error");
+                                MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                                 return;
                             }
                             byte[] inputs2 = new byte[1000];
@@ -442,7 +442,7 @@ namespace Dragon_Fist
                             }
                             else
                             {
-                                MessageBox.Show(this, "Not Found level0", "Error");
+                                MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
                                 return;
                             }
                         }
@@ -472,7 +472,7 @@ namespace Dragon_Fist
 
                         if (manifest_path == null)
                         {
-                            MessageBox.Show(this, "AndroidManifest.xml path ERROR", "Error");
+                            MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                             return;
                         }
                         byte[] inputs = new byte[1000];
@@ -505,7 +505,7 @@ namespace Dragon_Fist
             {
                 this.Opacity = 0;
                 this.Visible = false;
-                Report_form Rf = new Report_form(apk_name, dump_path, package_name, level0, is_meta_exist, meta_f_list, h_list, changed_path_name, md_ok, T_status, R_status, items, table_list, itemTables, is_mono, select_platform, time_report, rand_report, metadata_path, is_click_md, is_hook_ok, ocr_list, is_ocr_runned, is_db_runned, is_mdf_ok);
+                Report_form Rf = new Report_form(apk_name, dump_path, package_name, level0, is_meta_exist, meta_f_list, h_list, changed_path_name, md_ok, T_status, R_status, items, table_list, itemTables, is_mono, select_platform, time_report, rand_report, metadata_path, is_click_md, is_hook_ok, ocr_list, is_ocr_runned, is_db_runned, is_mdf_ok, original_path_name);
                 Rf.ShowDialog();
                 List<String> temp_items = new List<String>();
                 temp_items = Rf.get_items();
@@ -623,7 +623,7 @@ namespace Dragon_Fist
             {
                 if (!File.Exists(@dump_path + "\\dump.cs"))
                 {
-                    MessageBox.Show(this, "The dumped file is not found\n\nPlease dump again or check your APK", "Error");
+                    MessageBox.Show(this, "[Error Code = 0x00]\n\nThe dumped file is not found\n\nPlease dump again or check your APK", "Error");
                     return;
                 }
 

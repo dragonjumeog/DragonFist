@@ -57,6 +57,7 @@ namespace Dragon_Fist
 
         String select_platform = null;
         String metadata_path = null;
+        String original_path_name = null;
 
         int is_click_md = 0;
         int is_mono = 0;
@@ -65,7 +66,7 @@ namespace Dragon_Fist
         int is_db_runned = 0;
         int is_mdf_ok = 0;
 
-        public Report_form(String _apk_name, String _dump_path, String _package_name, String _level0, int _is_meta_exist, List<List<String>> _meta_f_list, List<List<String>> _h_list, String _xml_path, List<int> _is_md_ok, List<int> _T_status, List<int> _R_status, List<String> _items, List<String> _table_list, List<DataTable> _itemTables, int _is_mono, String _select_platform, List<String> _time_report, List<String> _rand_report, String _metadata_path, int _is_click_md, int _is_hook_ok, List<List<String>> _ocr_list, int _is_ocr_runned, int _is_db_runned, int _is_mdf_ok)
+        public Report_form(String _apk_name, String _dump_path, String _package_name, String _level0, int _is_meta_exist, List<List<String>> _meta_f_list, List<List<String>> _h_list, String _xml_path, List<int> _is_md_ok, List<int> _T_status, List<int> _R_status, List<String> _items, List<String> _table_list, List<DataTable> _itemTables, int _is_mono, String _select_platform, List<String> _time_report, List<String> _rand_report, String _metadata_path, int _is_click_md, int _is_hook_ok, List<List<String>> _ocr_list, int _is_ocr_runned, int _is_db_runned, int _is_mdf_ok, String _original_path_name)
         {
             InitializeComponent();
             listView1.View = View.Details;
@@ -121,6 +122,7 @@ namespace Dragon_Fist
             is_ocr_runned = _is_ocr_runned;
             is_db_runned = _is_db_runned;
             is_mdf_ok = _is_mdf_ok;
+            original_path_name = _original_path_name;
 
             if (is_mono == 0)
             {
@@ -154,7 +156,7 @@ namespace Dragon_Fist
             button3.TabStop = false; button3.FlatStyle = FlatStyle.Flat; button3.FlatAppearance.BorderSize = 0;
             button4.TabStop = false; button4.FlatStyle = FlatStyle.Flat; button4.FlatAppearance.BorderSize = 0;
 
-            if (File.Exists(@Application.StartupPath + "\\Report_" + apk_name + "_" + select_platform + ".docx"))
+            if (File.Exists(@original_path_name + "\\Report_" + apk_name + "_" + select_platform + ".docx"))
             {
                 is_make = 1;
             }
@@ -3459,7 +3461,7 @@ namespace Dragon_Fist
             rng_10_3.InsertParagraphAfter();
 
             // Save
-            word_doc.SaveAs2(@Application.StartupPath + "\\Report_" + apk_name + "_" + select_platform + ".docx");
+            word_doc.SaveAs2(@original_path_name + "\\Report_" + apk_name + "_" + select_platform + ".docx");
             word_doc.Close();
             word.Quit();
             listView1.Items.Add("Success to make a report");
@@ -3561,7 +3563,7 @@ namespace Dragon_Fist
                 catch (Exception e1)
                 {
                     listView1.Items.Add("Fail to make a report");
-                    MessageBox.Show(this, "Fail to make a report\n\n" + e1.ToString(), "Error");
+                    MessageBox.Show(this, "[Error Code = 0x70]\n\nFail to make a report\n\n" + e1.ToString(), "Error");
                 }
             }
         }
@@ -3634,7 +3636,7 @@ namespace Dragon_Fist
             {
                 ProcessStartInfo pro = new ProcessStartInfo();
                 pro.FileName = @"cmd";
-                pro.WorkingDirectory = @Application.StartupPath + "\\";
+                pro.WorkingDirectory = @original_path_name + "\\";
                 pro.CreateNoWindow = true;
                 pro.UseShellExecute = false;
                 pro.RedirectStandardOutput = false;

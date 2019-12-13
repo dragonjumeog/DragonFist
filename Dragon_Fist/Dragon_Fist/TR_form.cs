@@ -570,7 +570,7 @@ namespace Dragon_Fist
         {
             if (!CheckFridaServer())
             {
-                MessageBox.Show(this, "Please Run Frida-Server on your device!", "Error");
+                MessageBox.Show(this, "[Error Code = 0x02]\n\nPlease Run Frida-Server on your device!", "Error");
                 return;
             }
 
@@ -614,7 +614,7 @@ namespace Dragon_Fist
         {
             if (!CheckFridaServer())
             {
-                MessageBox.Show(this, "Please Run Frida-Server on your device!", "Error");
+                MessageBox.Show(this, "[Error Code = 0x02]\n\nPlease Run Frida-Server on your device!", "Error");
                 return;
             }
 
