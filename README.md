@@ -11,6 +11,7 @@ Pre-Installation
 3. Java JDK : https://www.oracle.com/technetwork/java/javase/downloads/index.html
 4. Frida(Windows) : https://frida.re/docs/installation, 
 5. Frida-server(Android) : https://github.com/frida/frida/releases 
+6. .NET Framework : https://dotnet.microsoft.com/download/dotnet-framework
 
 Reference
 1. Il2CppDumper : https://github.com/Perfare/Il2CppDumper
