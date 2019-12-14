@@ -41,8 +41,8 @@ There are 2 ways to install DragonFist.
 
 DragonFist provides User-Manual and FAQ
 
-1. [DragonFist_UserManual](./FAQ & Maual/DragonFist_UserManual.pdf)
-2. [DragonFist_FAQ](./FAQ & Maual/DragonFist_FAQ.pdf)
+1. ![DragonFist_UserManual](./FAQ&Maual/DragonFist_UserManual.pdf)
+2. ![DragonFist_FAQ](./FAQ&Maual/DragonFist_FAQ.pdf)
 
 ## Reference
 
