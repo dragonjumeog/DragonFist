@@ -528,13 +528,13 @@ namespace Dragon_Fist
             Process shell_pro = new Process();
             shell_pro.StartInfo = proInfo;
             shell_pro.Start();
-            shell_pro.StandardInput.Write("adb shell ps" + Environment.NewLine);
+            shell_pro.StandardInput.Write("frida-ps -U" + Environment.NewLine);
             shell_pro.StandardInput.Close();
             output = shell_pro.StandardOutput.ReadToEnd();
             shell_pro.WaitForExit();
             shell_pro.Close();
 
-            if (output.Contains("frida"))
+            if (output.Contains("zygote"))
                 return true;
             else
                 return false;
