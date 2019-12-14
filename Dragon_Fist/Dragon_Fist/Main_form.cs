@@ -85,6 +85,7 @@ namespace Dragon_Fist
             button8.TabStop = false; button8.FlatStyle = FlatStyle.Flat; button8.FlatAppearance.BorderSize = 0;
             button9.TabStop = false; button9.FlatStyle = FlatStyle.Flat; button9.FlatAppearance.BorderSize = 0;
             button10.TabStop = false; button10.FlatStyle = FlatStyle.Flat; button10.FlatAppearance.BorderSize = 0;
+            button11.TabStop = false; button11.FlatStyle = FlatStyle.Flat; button11.FlatAppearance.BorderSize = 0;
         }
 
         private void Main_form_Load(object sender, EventArgs e)
@@ -129,6 +130,47 @@ namespace Dragon_Fist
             }
         }
 
+        public int ADB_Check()
+        {
+            List<String> txt = new List<string>(); int is_using = 0;
+
+            // adb check
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process current_pro = new Process();
+
+            proInfo.FileName = @"cmd";
+            proInfo.WorkingDirectory = @Application.StartupPath + "\\";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+            current_pro.EnableRaisingEvents = false;
+            current_pro.StartInfo = proInfo;
+            current_pro.Start();
+
+            String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
+            current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
+            current_pro.StandardInput.Close();
+            while (!current_pro.StandardOutput.EndOfStream)
+            {
+                tmp = current_pro.StandardOutput.ReadLine();
+                if (!tmp.Contains("devices")) { txt.Add(tmp); }
+            }
+            is_using = 1;
+            current_pro.WaitForExit();
+            current_pro.Close();
+
+            if (is_using == 1)
+            {
+                for (int i = 0; i < txt.Count; i++)
+                {
+                    if (txt[i].Contains("device")) { cnt++; }
+                }
+            }
+            return cnt;
+        }
+
         public ProcessStartInfo Set_Process(String file_name, String working_path, bool is_output)
         {
             ProcessStartInfo pro_info = new ProcessStartInfo();
@@ -167,7 +209,7 @@ namespace Dragon_Fist
             }
             else
             {
-                MessageBox.Show("apktool Not Found", "Error");
+                MessageBox.Show("[Error Code = 0x10]\n\napktool Not Found\n\nPlease check apktool.jar", "Error");
             }
         }
 
@@ -194,14 +236,14 @@ namespace Dragon_Fist
 
                 listView2.Items.Add("Dumping...");
                 String dump_direc = apk_path + "\\" + apk_name + "_dump" + "_" + select_platform;
-                if (!Directory.Exists(dump_direc)) { MessageBox.Show(this, "Not found directory", "Error"); return; }
+                if (!Directory.Exists(dump_direc)) { MessageBox.Show(this, "[Error Code = 0x12]\n\nNot found directory", "Error"); return; }
                 ProcessStartInfo proInfo_il2cpp = Set_Process("cmd", dump_direc, false);
                 String cmd_il2cppdumper_str = "\"" + Application.StartupPath + "\\Modules\\Il2CppDumper\\Il2CppDumper.exe\" ";
                 cmd_il2cppdumper_str += "\"" + metadata + "\" " + "\"" + il2cpp + "\" " + level0;
                 Run_process(proInfo_il2cpp, cmd_il2cppdumper_str, false);
                 if (!File.Exists(@dump_path + "\\dump.cs"))
                 {
-                    listView2.Items.Add("Fail to Dump APK, the dumped file is not found");
+                    listView2.Items.Add("[Error Code = 0x00] Fail to Dump APK, the dumped file is not found");
                 }
                 else
                 {
@@ -210,7 +252,7 @@ namespace Dragon_Fist
             }
             else
             {
-                MessageBox.Show(this, "Il2CppDumper Not Found", "Error");
+                MessageBox.Show(this, "[Error Code = 0x11]\n\nIl2CppDumper Not Found\n\nPlease check Il2", "Error");
             }
         }
 
@@ -283,7 +325,7 @@ namespace Dragon_Fist
                         catch (Exception d1)
                         {
                             listView2.Items.Add("Fail to decompile apk");
-                            MessageBox.Show(this, "Fail to decompile apk\n" + d1.ToString(), "Error");
+                            MessageBox.Show(this, "Fail to decompile apk\n\n" + d1.ToString(), "Error");
                         }
                         listView2.Items.Add("Success to Decompile this APK File");
                     }
@@ -324,7 +366,7 @@ namespace Dragon_Fist
                         {
                             if (manifest_path == null)
                             {
-                                MessageBox.Show(this, "AndroidManifest.xml path ERROR", "Error");
+                                MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                                 return;
                             }
                             byte[] inputs2 = new byte[1000];
@@ -442,7 +484,7 @@ namespace Dragon_Fist
                             }
                             else
                             {
-                                MessageBox.Show(this, "Not Found level0", "Error");
+                                MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
                                 return;
                             }
                         }
@@ -472,7 +514,7 @@ namespace Dragon_Fist
 
                         if (manifest_path == null)
                         {
-                            MessageBox.Show(this, "AndroidManifest.xml path ERROR", "Error");
+                            MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                             return;
                         }
                         byte[] inputs = new byte[1000];
@@ -505,7 +547,7 @@ namespace Dragon_Fist
             {
                 this.Opacity = 0;
                 this.Visible = false;
-                Report_form Rf = new Report_form(apk_name, dump_path, package_name, level0, is_meta_exist, meta_f_list, h_list, changed_path_name, md_ok, T_status, R_status, items, table_list, itemTables, is_mono, select_platform, time_report, rand_report, metadata_path, is_click_md, is_hook_ok, ocr_list, is_ocr_runned, is_db_runned, is_mdf_ok);
+                Report_form Rf = new Report_form(apk_name, dump_path, package_name, level0, is_meta_exist, meta_f_list, h_list, changed_path_name, md_ok, T_status, R_status, items, table_list, itemTables, is_mono, select_platform, time_report, rand_report, metadata_path, is_click_md, is_hook_ok, ocr_list, is_ocr_runned, is_db_runned, is_mdf_ok, original_path_name);
                 Rf.ShowDialog();
                 List<String> temp_items = new List<String>();
                 temp_items = Rf.get_items();
@@ -600,7 +642,7 @@ namespace Dragon_Fist
                         catch (Exception mdf)
                         {
                             listView2.Items.Add("Metadata form Error - get_is_meta_exist()");
-                            MessageBox.Show(this, "Metadata form Error\nget_is_meta_exist()\n" + mdf.ToString(), "Error");
+                            MessageBox.Show(this, "Metadata form Error\n\nget_is_meta_exist()\n\n" + mdf.ToString(), "Error");
                         }
                     }
                 }
@@ -623,7 +665,7 @@ namespace Dragon_Fist
             {
                 if (!File.Exists(@dump_path + "\\dump.cs"))
                 {
-                    MessageBox.Show(this, "The dumped file is not found\n\nPlease dump again or check your APK", "Error");
+                    MessageBox.Show(this, "[Error Code = 0x00]\n\nThe dumped file is not found\n\nPlease dump again or check your APK", "Error");
                     return;
                 }
 
@@ -661,19 +703,19 @@ namespace Dragon_Fist
                 catch(Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_meta_function_list()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_meta_function_list()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_meta_function_list()\n\n" + df.ToString(), "Error");
                 }
                 try { is_hook_ok = Df.get_is_hook_ok(); }
                 catch (Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_hook_ok()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_hook_ok()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_hook_ok()\n\n" + df.ToString(), "Error");
                 }
                 try { h_list = Df.get_h_list(); }
                 catch (Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_h_list()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_h_list()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_h_list()\n\n" + df.ToString(), "Error");
                 }
                 button6.BackColor = Color.FromArgb(64, 64, 64);
                 pictureBox7.BackColor = Color.FromArgb(64, 64, 64);
@@ -692,43 +734,7 @@ namespace Dragon_Fist
             }
             if (is_ok == 1)
             {
-                List<String> txt = new List<string>(); int is_using = 0;
-
-                // adb check
-                ProcessStartInfo proInfo = new ProcessStartInfo();
-                Process current_pro = new Process();
-
-                proInfo.FileName = @"cmd";
-                proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-                proInfo.CreateNoWindow = true;
-                proInfo.UseShellExecute = false;
-                proInfo.RedirectStandardOutput = true;
-                proInfo.RedirectStandardInput = true;
-                proInfo.RedirectStandardError = true;
-                current_pro.EnableRaisingEvents = false;
-                current_pro.StartInfo = proInfo;
-                current_pro.Start();
-
-                String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-                current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-                current_pro.StandardInput.Close();
-                while (!current_pro.StandardOutput.EndOfStream)
-                {
-                    tmp = current_pro.StandardOutput.ReadLine();
-                    if (!tmp.Contains("devices")) { txt.Add(tmp); }
-                }
-                is_using = 1;
-                current_pro.WaitForExit();
-                current_pro.Close();
-
-                if (is_using == 1)
-                {
-                    for (int i = 0; i < txt.Count; i++)
-                    {
-                        if (txt[i].Contains("device")) { cnt++; }
-                    }
-                }
-
+                int cnt = ADB_Check();
                 if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
                 else if (cnt > 0)
                 {
@@ -774,43 +780,7 @@ namespace Dragon_Fist
         {
             if (is_ok == 1)
             {
-                List<String> txt = new List<string>(); int is_using = 0;
-
-                // adb check
-                ProcessStartInfo proInfo = new ProcessStartInfo();
-                Process current_pro = new Process();
-
-                proInfo.FileName = @"cmd";
-                proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-                proInfo.CreateNoWindow = true;
-                proInfo.UseShellExecute = false;
-                proInfo.RedirectStandardOutput = true;
-                proInfo.RedirectStandardInput = true;
-                proInfo.RedirectStandardError = true;
-                current_pro.EnableRaisingEvents = false;
-                current_pro.StartInfo = proInfo;
-                current_pro.Start();
-
-                String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-                current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-                current_pro.StandardInput.Close();
-                while (!current_pro.StandardOutput.EndOfStream)
-                {
-                    tmp = current_pro.StandardOutput.ReadLine();
-                    if (!tmp.Contains("devices")) { txt.Add(tmp); }
-                }
-                is_using = 1;
-                current_pro.WaitForExit();
-                current_pro.Close();
-
-                if (is_using == 1)
-                {
-                    for (int i = 0; i < txt.Count; i++)
-                    {
-                        if (txt[i].Contains("device")) { cnt++; }
-                    }
-                }
-
+                int cnt = ADB_Check();
                 if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
                 else if (cnt > 0)
                 {
@@ -856,43 +826,7 @@ namespace Dragon_Fist
 
         private void button10_Click(object sender, EventArgs e) // Time / Random
         {
-            List<String> txt = new List<string>(); int is_using = 0;
-
-            // adb check
-            ProcessStartInfo proInfo = new ProcessStartInfo();
-            Process current_pro = new Process();
-
-            proInfo.FileName = @"cmd";
-            proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-            proInfo.CreateNoWindow = true;
-            proInfo.UseShellExecute = false;
-            proInfo.RedirectStandardOutput = true;
-            proInfo.RedirectStandardInput = true;
-            proInfo.RedirectStandardError = true;
-            current_pro.EnableRaisingEvents = false;
-            current_pro.StartInfo = proInfo;
-            current_pro.Start();
-
-            String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-            current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-            current_pro.StandardInput.Close();
-            while (!current_pro.StandardOutput.EndOfStream)
-            {
-                tmp = current_pro.StandardOutput.ReadLine();
-                if (!tmp.Contains("devices")) { txt.Add(tmp); }
-            }
-            is_using = 1;
-            current_pro.WaitForExit();
-            current_pro.Close();
-
-            if (is_using == 1)
-            {
-                for (int i = 0; i < txt.Count; i++)
-                {
-                    if (txt[i].Contains("device")) { cnt++; }
-                }
-            }
-
+            int cnt = ADB_Check();
             if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
             else if (cnt > 0)
             {
@@ -933,7 +867,7 @@ namespace Dragon_Fist
                 catch (Exception df)
                 {
                     listView2.Items.Add("TR_form Error - get_TR_status()");
-                    MessageBox.Show(this, "TR_form Error\nget_TR_status()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "TR_form Error\n\nget_TR_status()\n\n" + df.ToString(), "Error");
                 }
                 button10.BackColor = Color.FromArgb(64, 64, 64);
                 pictureBox12.BackColor = Color.FromArgb(64, 64, 64);
@@ -964,6 +898,23 @@ namespace Dragon_Fist
             items.Clear();
             listView3.Items.Clear();
             MessageBox.Show(this, "Success to reset list", "Info");
+        }
+
+
+        private void button11_Click(object sender, EventArgs e) // Open APK folder
+        {
+            if (is_ok == 1)
+            {
+                if (Directory.Exists(@original_path_name))
+                {
+                    String file_path = @original_path_name;
+                    System.Diagnostics.Process.Start(file_path);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, "Please open APK first", "Error");
+            }
         }
 
         #region Button Color
@@ -1083,10 +1034,19 @@ namespace Dragon_Fist
         {
             button9.BackColor = Color.FromArgb(64, 64, 64);
         }
+
+        private void button11_MouseMove(object sender, MouseEventArgs e)
+        {
+            button11.BackColor = Color.DodgerBlue;
+        }
+
+        private void button11_MouseLeave(object sender, EventArgs e)
+        {
+            button11.BackColor = Color.FromArgb(64, 64, 64);
+        }
+
+        #endregion
     }
-
-    #endregion
-
     // @@@@ Buttons @@@@
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 }

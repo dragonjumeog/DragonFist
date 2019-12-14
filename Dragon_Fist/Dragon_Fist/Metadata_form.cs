@@ -175,7 +175,7 @@ namespace Dragon_Fist
                 try { Memory_dump(package_name, select_platform); }
                 catch (Exception e1)
                 {
-                    MessageBox.Show("Fail to memory dump\n\n" + e1.ToString() + "\n\nCheck your adb or application", "Error");
+                    MessageBox.Show("[Error Code = 0x20]\n\nFail to memory dump\n\n" + e1.ToString() + "\n\nCheck your adb or application", "Error");
                     return;
                 }
                 MessageBox.Show("Success to dump memory!", "Info");

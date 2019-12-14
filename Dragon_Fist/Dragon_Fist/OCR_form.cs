@@ -633,9 +633,9 @@ namespace Dragon_Fist
         {
             //search var offset in dump.cs with its name.
             //asd
-            if(!File.Exists(dump_path + "dump.cs"))
+            if(!File.Exists(@dump_path + "dump.cs"))
             {
-                MessageBox.Show(this, "Dump file not exist!", "Error");
+                MessageBox.Show(this, "[Error Code = 0x00]\n\nThe dumped file is not found\n\nPlease dump again or check your APK", "Error");
             }
             String[] dumpcs = File.ReadAllLines(@dump_path + "dump.cs");
             String line;
@@ -797,14 +797,14 @@ namespace Dragon_Fist
             }
             catch (Exception ocr_e1)
             {
-                MessageBox.Show(this, "Fail to capture display", "Error");
+                MessageBox.Show(this, "[Error Code = 0x60]\n\nFail to capture display", "Error");
                 return;
             }
             String capture_path = tmp_path + "\\screen.png";
             FileInfo fi = new FileInfo(capture_path);
             if (!fi.Exists)
             {
-                MessageBox.Show(this, "screen.png is not exist!", "Error");
+                MessageBox.Show(this, "[Error Code = 0x61]\n\nscreen.png is not exist", "Error");
                 return;
             }
             Bitmap pict = new Bitmap(tmp_path + "\\screen.png");

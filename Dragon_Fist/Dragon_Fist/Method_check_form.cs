@@ -205,7 +205,7 @@ namespace Dragon_Fist
             //MessageBox.Show(@dump_path, "Info");
             if (!File.Exists(@dump_path + "\\dump.cs"))
             {
-                MessageBox.Show(this, "The dumped file is not found\n\nPlease dump again or check your APK", "Error");
+                MessageBox.Show(this, "[Error Code = 0x00]\n\nThe dumped file is not found\n\nPlease dump again or check your APK", "Error");
                 return;
             }
             if (user_dic.Count == 0)

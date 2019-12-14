@@ -1043,7 +1043,7 @@ namespace Dragon_Fist
         {
             if (!CheckFridaServer())
             {
-                MessageBox.Show("Please Run Frida-Server on your device!");
+                MessageBox.Show("[Error Code = 0x02]\n\nPlease Run Frida-Server on your device!");
                 return;
             }
 
