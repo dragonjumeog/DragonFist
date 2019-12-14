@@ -41,8 +41,8 @@ There are 2 ways to install DragonFist.
 
 DragonFist provides User-Manual and FAQ
 
-1. [DragonFist_UserManual](./blob/master/FAQ%26Manual/DragonFist_UserManual.pdf) 
-2. [DragonFist_FAQ](./blob/master/FAQ%26Manual/DragonFist_FAQ.pdf)
+1. [DragonFist_UserManual](./tree/master/FAQ%26Manual)
+2. [DragonFist_FAQ](./tree/master/FAQ%26Manual)
 
 ## Reference
 
