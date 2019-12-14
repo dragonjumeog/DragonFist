@@ -130,6 +130,47 @@ namespace Dragon_Fist
             }
         }
 
+        public int ADB_Check()
+        {
+            List<String> txt = new List<string>(); int is_using = 0;
+
+            // adb check
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process current_pro = new Process();
+
+            proInfo.FileName = @"cmd";
+            proInfo.WorkingDirectory = @Application.StartupPath + "\\";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+            current_pro.EnableRaisingEvents = false;
+            current_pro.StartInfo = proInfo;
+            current_pro.Start();
+
+            String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
+            current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
+            current_pro.StandardInput.Close();
+            while (!current_pro.StandardOutput.EndOfStream)
+            {
+                tmp = current_pro.StandardOutput.ReadLine();
+                if (!tmp.Contains("devices")) { txt.Add(tmp); }
+            }
+            is_using = 1;
+            current_pro.WaitForExit();
+            current_pro.Close();
+
+            if (is_using == 1)
+            {
+                for (int i = 0; i < txt.Count; i++)
+                {
+                    if (txt[i].Contains("device")) { cnt++; }
+                }
+            }
+            return cnt;
+        }
+
         public ProcessStartInfo Set_Process(String file_name, String working_path, bool is_output)
         {
             ProcessStartInfo pro_info = new ProcessStartInfo();
@@ -693,43 +734,7 @@ namespace Dragon_Fist
             }
             if (is_ok == 1)
             {
-                List<String> txt = new List<string>(); int is_using = 0;
-
-                // adb check
-                ProcessStartInfo proInfo = new ProcessStartInfo();
-                Process current_pro = new Process();
-
-                proInfo.FileName = @"cmd";
-                proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-                proInfo.CreateNoWindow = true;
-                proInfo.UseShellExecute = false;
-                proInfo.RedirectStandardOutput = true;
-                proInfo.RedirectStandardInput = true;
-                proInfo.RedirectStandardError = true;
-                current_pro.EnableRaisingEvents = false;
-                current_pro.StartInfo = proInfo;
-                current_pro.Start();
-
-                String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-                current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-                current_pro.StandardInput.Close();
-                while (!current_pro.StandardOutput.EndOfStream)
-                {
-                    tmp = current_pro.StandardOutput.ReadLine();
-                    if (!tmp.Contains("devices")) { txt.Add(tmp); }
-                }
-                is_using = 1;
-                current_pro.WaitForExit();
-                current_pro.Close();
-
-                if (is_using == 1)
-                {
-                    for (int i = 0; i < txt.Count; i++)
-                    {
-                        if (txt[i].Contains("device")) { cnt++; }
-                    }
-                }
-
+                int cnt = ADB_Check();
                 if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
                 else if (cnt > 0)
                 {
@@ -775,43 +780,7 @@ namespace Dragon_Fist
         {
             if (is_ok == 1)
             {
-                List<String> txt = new List<string>(); int is_using = 0;
-
-                // adb check
-                ProcessStartInfo proInfo = new ProcessStartInfo();
-                Process current_pro = new Process();
-
-                proInfo.FileName = @"cmd";
-                proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-                proInfo.CreateNoWindow = true;
-                proInfo.UseShellExecute = false;
-                proInfo.RedirectStandardOutput = true;
-                proInfo.RedirectStandardInput = true;
-                proInfo.RedirectStandardError = true;
-                current_pro.EnableRaisingEvents = false;
-                current_pro.StartInfo = proInfo;
-                current_pro.Start();
-
-                String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-                current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-                current_pro.StandardInput.Close();
-                while (!current_pro.StandardOutput.EndOfStream)
-                {
-                    tmp = current_pro.StandardOutput.ReadLine();
-                    if (!tmp.Contains("devices")) { txt.Add(tmp); }
-                }
-                is_using = 1;
-                current_pro.WaitForExit();
-                current_pro.Close();
-
-                if (is_using == 1)
-                {
-                    for (int i = 0; i < txt.Count; i++)
-                    {
-                        if (txt[i].Contains("device")) { cnt++; }
-                    }
-                }
-
+                int cnt = ADB_Check();
                 if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
                 else if (cnt > 0)
                 {
@@ -857,43 +826,7 @@ namespace Dragon_Fist
 
         private void button10_Click(object sender, EventArgs e) // Time / Random
         {
-            List<String> txt = new List<string>(); int is_using = 0;
-
-            // adb check
-            ProcessStartInfo proInfo = new ProcessStartInfo();
-            Process current_pro = new Process();
-
-            proInfo.FileName = @"cmd";
-            proInfo.WorkingDirectory = @Application.StartupPath + "\\";
-            proInfo.CreateNoWindow = true;
-            proInfo.UseShellExecute = false;
-            proInfo.RedirectStandardOutput = true;
-            proInfo.RedirectStandardInput = true;
-            proInfo.RedirectStandardError = true;
-            current_pro.EnableRaisingEvents = false;
-            current_pro.StartInfo = proInfo;
-            current_pro.Start();
-
-            String cmd_str = "adb devices"; String tmp = null; int cnt = 0;
-            current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
-            current_pro.StandardInput.Close();
-            while (!current_pro.StandardOutput.EndOfStream)
-            {
-                tmp = current_pro.StandardOutput.ReadLine();
-                if (!tmp.Contains("devices")) { txt.Add(tmp); }
-            }
-            is_using = 1;
-            current_pro.WaitForExit();
-            current_pro.Close();
-
-            if (is_using == 1)
-            {
-                for (int i = 0; i < txt.Count; i++)
-                {
-                    if (txt[i].Contains("device")) { cnt++; }
-                }
-            }
-
+            int cnt = ADB_Check();
             if (cnt == 0) { MessageBox.Show(this, "Device or adb not found", "Error"); return; }
             else if (cnt > 0)
             {
