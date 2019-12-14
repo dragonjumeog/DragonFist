@@ -3545,7 +3545,7 @@ namespace Dragon_Fist
             {
                 try
                 {
-                    if (File.Exists(@Application.StartupPath + "\\Report_" + apk_name + ".docx"))
+                    if (File.Exists(@original_path_name + "\\Report_" + apk_name + ".docx"))
                     {
                         listView1.Items.Add("The report is already made");
                         if (MessageBox.Show(this, "The report is already made\n\nDo you want to make again?", "Check", MessageBoxButtons.YesNo) == DialogResult.Yes)
