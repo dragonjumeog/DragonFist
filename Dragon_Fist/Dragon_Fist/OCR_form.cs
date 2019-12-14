@@ -832,6 +832,16 @@ namespace Dragon_Fist
         {
             if (is_captured == 1 && is_capture_button_fin == 1)
             {
+                if (!CheckFrida("zygote"))
+                {
+                    MessageBox.Show("Cannot Find running frida-server", "Error");
+                    return;
+                }
+                if(!CheckFrida(package_name))
+                {
+                    MessageBox.Show("Cannot Find "+package_name, "Error");
+                    return;
+                }
                 is_class_search = false;
                 is_value_search = true;
                 listView2.Columns.Clear();
@@ -1010,6 +1020,16 @@ namespace Dragon_Fist
             }
             if (is_captured == 1 && is_capture_button_fin == 1)
             {
+                if (!CheckFrida("zygote"))
+                {
+                    MessageBox.Show("Cannot Find running frida-server", "Error");
+                    return;
+                }
+                if (!CheckFrida(package_name))
+                {
+                    MessageBox.Show("Cannot Find " + package_name, "Error");
+                    return;
+                }
                 is_class_search = true;
                 is_value_search = false;
                 listView1.Columns.Clear();
@@ -1020,6 +1040,7 @@ namespace Dragon_Fist
                 listView1.Columns.Add("Address", 85, HorizontalAlignment.Center);
                 listView2.Columns.Add("Name", 210, HorizontalAlignment.Center);
                 listView2.Columns.Add("Offset", 210, HorizontalAlignment.Center);
+
 
                 String result = OCR_proc(new Bitmap(pictureBox1.Image));
                 int int_result = int.Parse(Regex.Replace(result, @"\D", ""));
@@ -1083,7 +1104,17 @@ namespace Dragon_Fist
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            if(is_captured == 1)
+            if (!CheckFrida("zygote"))
+            {
+                MessageBox.Show("Cannot Find running frida-server", "Error");
+                return;
+            }
+            if (!CheckFrida(package_name))
+            {
+                MessageBox.Show("Cannot Find " + package_name, "Error");
+                return;
+            }
+            if (is_captured == 1)
             {
                 if(listView1.Items.Count > 0)
                 {
@@ -1296,6 +1327,31 @@ namespace Dragon_Fist
             items_list.Clear();
             listView3.Items.Clear();
             MessageBox.Show(this, "Success to reset list", "Info");
+        }
+        private bool CheckFrida(String proc)
+        {
+            String output;
+
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            proInfo.FileName = "cmd";
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardOutput = true;
+
+            Process shell_pro = new Process();
+            shell_pro.StartInfo = proInfo;
+            shell_pro.Start();
+            shell_pro.StandardInput.Write("frida-ps -U" + Environment.NewLine);
+            shell_pro.StandardInput.Close();
+            output = shell_pro.StandardOutput.ReadToEnd();
+            shell_pro.WaitForExit();
+            shell_pro.Close();
+
+            if (output.Contains(proc))
+                return true;
+            else
+                return false;
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
