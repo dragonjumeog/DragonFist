@@ -8,7 +8,7 @@ For user-friendly environment, DragonFist is created with GUI(Graphical User Int
 
 ## Features
 
-- Decompile APK and Restore metadata
+- Decompile APK and Restore metadata automatically
 - Check Method Vulnerability by auto-hooking it dynamically 
 - Check Time & Random Vulnerability by manipulating it directly
 - Check Saving data with the format of SQLite3 and PlayerPrefs
@@ -41,8 +41,8 @@ There are 2 ways to install DragonFist.
 
 DragonFist provides User-Manual and FAQ
 
-1. [DragonFist_UserManual](./tree/master/FAQ%26Manual)
-2. [DragonFist_FAQ](./tree/master/FAQ%26Manual)
+1. [DragonFist_UserManual](./FAQ&Manual/DragonFist_UserManual.pdf)
+2. [DragonFist_FAQ](./FAQ&Manual/DragonFist_FAQ.pdf)
 
 ## Reference
 
