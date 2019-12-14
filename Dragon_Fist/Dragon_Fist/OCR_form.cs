@@ -229,7 +229,11 @@ namespace Dragon_Fist
                 if (pictureBox1.Height < e.Y)
                     _Y = pictureBox1.Height;
                 _selection.Width = _X - _selection.X;
+                if (_selection.Width <= 0)
+                    _selection.Width = 0;
                 _selection.Height = _Y - _selection.Y;
+                if (_selection.Height <= 0)
+                    _selection.Height = 0;
 
                 _selected = true;
 
@@ -242,6 +246,11 @@ namespace Dragon_Fist
         {
             if(is_captured == 1)
             {
+                if (_selection.Height == 0 || _selection.Width == 0)
+                {
+                    _selected = false;
+                    return;
+                }
                 if (e.Button == MouseButtons.Left && _selecting)
                 {
                     // Create cropped image:
@@ -956,6 +965,7 @@ namespace Dragon_Fist
                         }
                     }
                 }
+                OCR_Value = int.Parse(OCR_proc((Bitmap)pictureBox1.Image));
                 //MessageBox.Show(this, "Check done!", "Info");
                 for (int i = 0; i < Checked_Addresses.Count; i++)
                 {
@@ -969,7 +979,7 @@ namespace Dragon_Fist
                     Image new_cap = new Bitmap(Application.StartupPath + "\\screen.png");
                     new_cap = new Bitmap(new_cap, new System.Drawing.Size(new_cap.Width / 3, new_cap.Height / 3));
                     pictureBox1.Image = new_cap.Crop(_selection).Fit2PictureBox(pictureBox1);
-                    if (999999 == int.Parse(OCR_proc((Bitmap)pictureBox1.Image)))
+                    if (OCR_Value != int.Parse(OCR_proc((Bitmap)pictureBox1.Image)))
                     {
                         MessageBox.Show(this, "Address Found!\n\n" + Checked_Addresses[i], "Info");
                         foreach(ListViewItem itm in listView1.Items)
@@ -1040,12 +1050,6 @@ namespace Dragon_Fist
                 listView1.Columns.Add("Address", 85, HorizontalAlignment.Center);
                 listView2.Columns.Add("Name", 210, HorizontalAlignment.Center);
                 listView2.Columns.Add("Offset", 210, HorizontalAlignment.Center);
-
-
-                String result = OCR_proc(new Bitmap(pictureBox1.Image));
-                int int_result = int.Parse(Regex.Replace(result, @"\D", ""));
-                OCR_Value = int_result;
-                MessageBox.Show(this, "OCR Value is :\n" + result, "Info");
                 if (textBox1.Text == null)
                 {
                     MessageBox.Show(this, "Enter value name to search!", "Error");
