@@ -85,6 +85,7 @@ namespace Dragon_Fist
             button8.TabStop = false; button8.FlatStyle = FlatStyle.Flat; button8.FlatAppearance.BorderSize = 0;
             button9.TabStop = false; button9.FlatStyle = FlatStyle.Flat; button9.FlatAppearance.BorderSize = 0;
             button10.TabStop = false; button10.FlatStyle = FlatStyle.Flat; button10.FlatAppearance.BorderSize = 0;
+            button11.TabStop = false; button11.FlatStyle = FlatStyle.Flat; button11.FlatAppearance.BorderSize = 0;
         }
 
         private void Main_form_Load(object sender, EventArgs e)
@@ -966,6 +967,23 @@ namespace Dragon_Fist
             MessageBox.Show(this, "Success to reset list", "Info");
         }
 
+
+        private void button11_Click(object sender, EventArgs e) // Open APK folder
+        {
+            if (is_ok == 1)
+            {
+                if (Directory.Exists(@original_path_name))
+                {
+                    String file_path = @original_path_name;
+                    System.Diagnostics.Process.Start(file_path);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, "Please open APK first", "Error");
+            }
+        }
+
         #region Button Color
 
         private void button1_MouseMove(object sender, MouseEventArgs e)
@@ -1083,10 +1101,19 @@ namespace Dragon_Fist
         {
             button9.BackColor = Color.FromArgb(64, 64, 64);
         }
+
+        private void button11_MouseMove(object sender, MouseEventArgs e)
+        {
+            button11.BackColor = Color.DodgerBlue;
+        }
+
+        private void button11_MouseLeave(object sender, EventArgs e)
+        {
+            button11.BackColor = Color.FromArgb(64, 64, 64);
+        }
+
+        #endregion
     }
-
-    #endregion
-
     // @@@@ Buttons @@@@
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 }
