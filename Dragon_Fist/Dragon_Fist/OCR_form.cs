@@ -222,8 +222,14 @@ namespace Dragon_Fist
             // Update the actual size of the selection:
             if (_selecting)
             {
-                _selection.Width = e.X - _selection.X;
-                _selection.Height = e.Y - _selection.Y;
+                int _X = e.X;
+                int _Y = e.Y;
+                if (pictureBox1.Width < e.X)
+                    _X = pictureBox1.Width;
+                if (pictureBox1.Height < e.Y)
+                    _Y = pictureBox1.Height;
+                _selection.Width = _X - _selection.X;
+                _selection.Height = _Y - _selection.Y;
 
                 _selected = true;
 
@@ -299,6 +305,29 @@ namespace Dragon_Fist
             }
         }
 
+        private void frida_check()
+        {
+            ProcessStartInfo proInfo = new ProcessStartInfo();
+            Process current_pro = new Process();
+
+            proInfo.FileName = @"cmd";
+            proInfo.WorkingDirectory = Application.StartupPath;
+            proInfo.CreateNoWindow = true;
+            proInfo.UseShellExecute = false;
+            proInfo.RedirectStandardOutput = true;
+            proInfo.RedirectStandardInput = true;
+            proInfo.RedirectStandardError = true;
+            current_pro.StartInfo = proInfo;
+            current_pro.Start();
+
+            //capture current device screen.
+            String cmd_str = "frida-ps -U";
+            current_pro.StandardInput.Write(@cmd_str + Environment.NewLine);
+            String txt = current_pro.StandardOutput.ReadToEnd();
+            current_pro.WaitForExit();
+            current_pro.Close();
+
+        }
         private void GenerateJSCode_memscan(String Searched_Value)
         {
             String code = "function memscan(pattern) {\n" +
@@ -812,7 +841,6 @@ namespace Dragon_Fist
                 listView1.Columns.Add("Name", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Address", 150, HorizontalAlignment.Center);
                 listView1.Columns.Add("Value", 140, HorizontalAlignment.Center);
-
                 try
                 {
                     String OCR = OCR_proc(new Bitmap(pictureBox1.Image));
@@ -1268,6 +1296,11 @@ namespace Dragon_Fist
             items_list.Clear();
             listView3.Items.Clear();
             MessageBox.Show(this, "Success to reset list", "Info");
+        }
+
+        private void PictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
