@@ -335,8 +335,6 @@ namespace Dragon_Fist
             table_0_1.Cell(2, 2).Range.Text = "보안성 검토를 통해 취약한 부분을 발견하고 그에 대한 가이드라인 제공";
 
             rng_0_1.InsertParagraphAfter();
-            //table_0_1_Range = word_doc.Bookmarks.get_Item(ref end_of_doc).Range;
-            //table_0_1_Range.InsertAfter("[표 0-1] 개요 및 목적");
 
             // table 0-1 title #2
             Word.Paragraph para_table_0_1_title = word_doc.Paragraphs.Add(ref obj_miss);

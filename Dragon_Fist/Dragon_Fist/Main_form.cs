@@ -325,7 +325,7 @@ namespace Dragon_Fist
                         catch (Exception d1)
                         {
                             listView2.Items.Add("Fail to decompile apk");
-                            MessageBox.Show(this, "Fail to decompile apk\n" + d1.ToString(), "Error");
+                            MessageBox.Show(this, "Fail to decompile apk\n\n" + d1.ToString(), "Error");
                         }
                         listView2.Items.Add("Success to Decompile this APK File");
                     }
@@ -642,7 +642,7 @@ namespace Dragon_Fist
                         catch (Exception mdf)
                         {
                             listView2.Items.Add("Metadata form Error - get_is_meta_exist()");
-                            MessageBox.Show(this, "Metadata form Error\nget_is_meta_exist()\n" + mdf.ToString(), "Error");
+                            MessageBox.Show(this, "Metadata form Error\n\nget_is_meta_exist()\n\n" + mdf.ToString(), "Error");
                         }
                     }
                 }
@@ -703,19 +703,19 @@ namespace Dragon_Fist
                 catch(Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_meta_function_list()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_meta_function_list()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_meta_function_list()\n\n" + df.ToString(), "Error");
                 }
                 try { is_hook_ok = Df.get_is_hook_ok(); }
                 catch (Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_hook_ok()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_hook_ok()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_hook_ok()\n\n" + df.ToString(), "Error");
                 }
                 try { h_list = Df.get_h_list(); }
                 catch (Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_h_list()");
-                    MessageBox.Show(this, "Method_check form Error\nget_is_h_list()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "Method_check form Error\n\nget_is_h_list()\n\n" + df.ToString(), "Error");
                 }
                 button6.BackColor = Color.FromArgb(64, 64, 64);
                 pictureBox7.BackColor = Color.FromArgb(64, 64, 64);
@@ -867,7 +867,7 @@ namespace Dragon_Fist
                 catch (Exception df)
                 {
                     listView2.Items.Add("TR_form Error - get_TR_status()");
-                    MessageBox.Show(this, "TR_form Error\nget_TR_status()\n" + df.ToString(), "Error");
+                    MessageBox.Show(this, "TR_form Error\n\nget_TR_status()\n\n" + df.ToString(), "Error");
                 }
                 button10.BackColor = Color.FromArgb(64, 64, 64);
                 pictureBox12.BackColor = Color.FromArgb(64, 64, 64);
