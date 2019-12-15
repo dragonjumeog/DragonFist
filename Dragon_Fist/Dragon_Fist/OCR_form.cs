@@ -636,6 +636,7 @@ namespace Dragon_Fist
                 }
             }
             memsearch_finish.Reset();
+            result.Clear();
         }
 
         public void ClassSearch(String dump_path, String name)
@@ -800,15 +801,15 @@ namespace Dragon_Fist
         private void button6_Click(object sender, EventArgs e) // Capture Display
         {
             String tmp_path = @Application.StartupPath;
-            try
-            {
+            //try
+            //{
                 OCR_Capture(tmp_path);
-            }
-            catch (Exception ocr_e1)
-            {
-                MessageBox.Show(this, "[Error Code = 0x60]\n\nFail to capture display", "Error");
-                return;
-            }
+            //}
+            //catch (Exception ocr_e1)
+            //{
+               // MessageBox.Show(this, "[Error Code = 0x60]\n\nFail to capture display", "Error");
+               // return;
+            //}
             String capture_path = tmp_path + "\\screen.png";
             FileInfo fi = new FileInfo(capture_path);
             if (!fi.Exists)
@@ -882,6 +883,12 @@ namespace Dragon_Fist
 
         private void button7_Click(object sender, EventArgs e)
         {
+            String path = Application.StartupPath;
+            FileInfo fi = new FileInfo(path + "\\screen.png");
+            if (fi.Exists)
+            {
+                File.Delete(path + "\\screen.png");
+            }
             server_running = false;
             srv.Close();
             socket_server.Abort();
@@ -969,6 +976,11 @@ namespace Dragon_Fist
                 //MessageBox.Show(this, "Check done!", "Info");
                 for (int i = 0; i < Checked_Addresses.Count; i++)
                 {
+                    if(Checked_Addresses[i].Contains("NULL"))
+                    {
+                        MessageBox.Show("Find Address First!");
+                        return;
+                    }
                     MemCorrupt(Checked_Addresses[i]);
                     memcorrupt_finish.WaitOne();
                     current_proc.Kill();
@@ -979,6 +991,7 @@ namespace Dragon_Fist
                     Image new_cap = new Bitmap(Application.StartupPath + "\\screen.png");
                     new_cap = new Bitmap(new_cap, new System.Drawing.Size(new_cap.Width / 3, new_cap.Height / 3));
                     pictureBox1.Image = new_cap.Crop(_selection).Fit2PictureBox(pictureBox1);
+                    new_cap.Dispose();
                     if (OCR_Value != int.Parse(OCR_proc((Bitmap)pictureBox1.Image)))
                     {
                         MessageBox.Show(this, "Address Found!\n\n" + Checked_Addresses[i], "Info");
@@ -1011,6 +1024,7 @@ namespace Dragon_Fist
                         return;
                     }
                     memcorrupt_finish.Reset();
+                    result.Clear();
                 }
                 MessageBox.Show(this, "Not Found :(", "Error");
                 is_ocr_runned = 1;
@@ -1084,28 +1098,6 @@ namespace Dragon_Fist
                 }
             }
         }
-
-        private void Button5_Click_1(object sender, EventArgs e)
-        {
-            Checked_number.Clear();
-            foreach (ListViewItem itm in listView1.Items)
-            {
-                if (itm.Checked)
-                {
-                    Checked_number.Add((uint)itm.Index);
-                }
-            }
-            int i = (int)Checked_number[0];
-
-            List<String> names = Fieldman[i].get_Method_names();
-            List<String> offsets = Fieldman[i].get_Method_offsets();
-
-            for(int j = 0; j < names.Count; j++)
-            {
-                listView2.Items.Add(new ListViewItem(new String[] { names[j], offsets[j] }));
-            }
-        }
-
         private void Button8_Click(object sender, EventArgs e)
         {
             if (!CheckFrida("zygote"))
@@ -1166,19 +1158,24 @@ namespace Dragon_Fist
 
                         getthis_finish.WaitOne();
                         current_proc.Kill();
+                        String this_add = "0";
+                        foreach(String ad in result)
+                        {
+                            if(ad.Contains("this"))
+                                this_add = ad.Split(':')[1].Trim();
 
-                        String this_add = result[result.Count - 1].Split(':')[1].Trim();
+                        }
                         foreach (ListViewItem itm in listView1.Items)
                         {
                             if (itm.Checked)
                             {
                                 long a = long.Parse(this_add.Replace("0x", "").Trim(), System.Globalization.NumberStyles.HexNumber);
                                 long b = long.Parse(itm.SubItems[2].Text.Replace("0x", "").Trim(), System.Globalization.NumberStyles.HexNumber);
-                                itm.SubItems[3].Text = String.Format("0x{0:X}", a + b);
-                                MessageBox.Show(this, itm.SubItems[3].Text, "Info");
+                                itm.SubItems[3].Text = String.Format("0x{0:x}", a + b);
                                 break;
                             }
                         }
+                        result.Clear();
                     }
                 }
                 else
