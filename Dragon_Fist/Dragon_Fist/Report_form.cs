@@ -2506,9 +2506,9 @@ namespace Dragon_Fist
                     {
                         table_9_3_content.Rows.Add();
                     }
-                    for (int j = 0; j < time_report.Count; j++)
+                    for (int j = 0; j < rand_report.Count; j++)
                     {
-                        rr = time_report[j].Split('@');
+                        rr = rand_report[j].Split('@');
                         if (rr[0].Contains(r_f_list[i])) { rand_m_a = rr[1]; break; }
                     }
                     table_9_3_content.Cell(i + 2, 1).Width = 185;
