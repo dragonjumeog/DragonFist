@@ -1394,7 +1394,7 @@ namespace Dragon_Fist
                 para_num++;
             }
 
-            if(h_list_size > 0 && is_dic == 1)
+            if(h_list_size > 0 && hooking_list_size > 0 && is_dic == 1)
             {
                 // title9 #5
                 Word.Paragraph para_title_5_2 = word_doc.Paragraphs.Add(ref obj_miss);
@@ -1434,28 +1434,24 @@ namespace Dragon_Fist
 
                 // title10 content #5
                 List<List<String>> temp_list2 = new List<List<String>>();
-                if (h_list_size > 0)
+                List<String> temp_list = new List<String>();
+                List<String> temp_list3;
+                String temp_str = null;
+                for (int i = 0; i < h_list_size; i++)
                 {
-                    List<String> temp_list = new List<String>();
-                    List<String> temp_list3;
-                    String temp_str = null;
-                    for (int i = 0; i < h_list_size; i++)
-                    {
-                        temp_str = h_list[i][0];
-                        for (int z = 0; z < temp_list.Count; z++) { if (temp_list[z].Equals(temp_str)) { continue; } } // 중복 방지
-                        temp_list.Add(temp_str);
-                    }
+                    temp_str = h_list[i][0];
+                    if (!temp_list.Contains(temp_str)) { temp_list.Add(temp_str); }
+                }
 
-                    for (int i = 0; i < hooking_list_size; i++)
+                for (int i = 0; i < hooking_list_size; i++)
+                {
+                    for (int j = 0; j < temp_list.Count; j++)
                     {
-                        for (int j = 0; j < temp_list.Count; j++)
+                        if (meta_f_list[i][1].Contains(temp_list[j]))
                         {
-                            if (meta_f_list[i][1].Contains(temp_list[j]))
-                            {
-                                temp_list3 = new List<String>();
-                                temp_list3.Add(meta_f_list[i][0]); temp_list3.Add(meta_f_list[i][1]); temp_list3.Add(meta_f_list[i][2]);
-                                temp_list2.Add(temp_list3);
-                            }
+                            temp_list3 = new List<String>();
+                            temp_list3.Add(meta_f_list[i][0]); temp_list3.Add(meta_f_list[i][1]); temp_list3.Add(meta_f_list[i][2]);
+                            temp_list2.Add(temp_list3);
                         }
                     }
                 }
