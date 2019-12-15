@@ -4,7 +4,7 @@ DragonFist is an automated tool for checking vulnerability and making report on 
 
 For user-friendly environment, DragonFist is created with GUI(Graphical User Interface)
 
-![MainForm](./Dragon_Fist/Dragon_Fist/Resources/Main_form_img.png)
+
 
 ## Features
 
