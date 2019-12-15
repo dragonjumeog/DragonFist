@@ -1744,152 +1744,159 @@ namespace Dragon_Fist
 
                 for(int i = 0; i < ocr_list.Count; i++)
                 {
-                    if(ocr_list[i][0] == "Value") { value_list.Add(ocr_list[i]); }
-                    else if(ocr_list[i][0] == "Class") { class_list.Add(ocr_list[i]); }
+                    if(ocr_list[i][0].Contains("Value")) { value_list.Add(ocr_list[i]); }
+                    else if(ocr_list[i][0].Contains("Class")) { class_list.Add(ocr_list[i]); }
                 }
 
-                Word.Paragraph para_title_6_3_1_content = word_doc.Paragraphs.Add(ref obj_miss);
-                para_title_6_3_1_content.Range.Font.Bold = 1;
-                para_title_6_3_1_content.Range.Font.Size = 10;
-                para_title_6_3_1_content.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                para_title_6_3_1_content.Range.Text = "Scan Result 1) Value 검색";
-                para_title_6_3_1_content.Format.SpaceAfter = 3;
-
-                // Value Table
-                Word.Table table_6_3_1_content;
-                Word.Range rng_table_6_3_1_content = word_doc.Bookmarks.get_Item(ref end_of_doc).Range;
-                table_6_3_1_content = word_doc.Tables.Add(rng_table_6_3_1_content, 2, 3, ref obj_miss, ref obj_miss);
-                table_6_3_1_content.Range.Font.Size = 8;
-                table_6_3_1_content.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                table_6_3_1_content.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                table_6_3_1_content.AllowAutoFit = false;
-
-                table_6_3_1_content.Cell(1, 1).Width = 100;
-                table_6_3_1_content.Cell(1, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_1_content.Cell(1, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_1_content.Cell(1, 1).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_1_content.Cell(1, 1).Range.Font.Bold = 1;
-                table_6_3_1_content.Cell(1, 1).Range.Text = "Name";
-
-                table_6_3_1_content.Cell(1, 2).Width = 150;
-                table_6_3_1_content.Cell(1, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_1_content.Cell(1, 2).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_1_content.Cell(1, 2).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_1_content.Cell(1, 2).Range.Font.Bold = 1;
-                table_6_3_1_content.Cell(1, 2).Range.Text = "Address";
-
-                table_6_3_1_content.Cell(1, 3).Width = 200;
-                table_6_3_1_content.Cell(1, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_1_content.Cell(1, 3).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_1_content.Cell(1, 3).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_1_content.Cell(1, 3).Range.Font.Bold = 1;
-                table_6_3_1_content.Cell(1, 3).Range.Text = "Original Value";
-
-                for (int i = 0; i < value_list.Count; i++)
+                if(value_list.Count > 0)
                 {
-                    if (i > 0)
+                    Word.Paragraph para_title_6_3_1_content = word_doc.Paragraphs.Add(ref obj_miss);
+                    para_title_6_3_1_content.Range.Font.Bold = 1;
+                    para_title_6_3_1_content.Range.Font.Size = 10;
+                    para_title_6_3_1_content.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    para_title_6_3_1_content.Range.Text = "Scan Result 1) Value 검색";
+                    para_title_6_3_1_content.Format.SpaceAfter = 3;
+
+                    // Value Table
+                    Word.Table table_6_3_1_content;
+                    Word.Range rng_table_6_3_1_content = word_doc.Bookmarks.get_Item(ref end_of_doc).Range;
+                    table_6_3_1_content = word_doc.Tables.Add(rng_table_6_3_1_content, 2, 3, ref obj_miss, ref obj_miss);
+                    table_6_3_1_content.Range.Font.Size = 8;
+                    table_6_3_1_content.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    table_6_3_1_content.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    table_6_3_1_content.AllowAutoFit = false;
+
+                    table_6_3_1_content.Cell(1, 1).Width = 100;
+                    table_6_3_1_content.Cell(1, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_1_content.Cell(1, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_1_content.Cell(1, 1).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_1_content.Cell(1, 1).Range.Font.Bold = 1;
+                    table_6_3_1_content.Cell(1, 1).Range.Text = "Name";
+
+                    table_6_3_1_content.Cell(1, 2).Width = 150;
+                    table_6_3_1_content.Cell(1, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_1_content.Cell(1, 2).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_1_content.Cell(1, 2).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_1_content.Cell(1, 2).Range.Font.Bold = 1;
+                    table_6_3_1_content.Cell(1, 2).Range.Text = "Address";
+
+                    table_6_3_1_content.Cell(1, 3).Width = 200;
+                    table_6_3_1_content.Cell(1, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_1_content.Cell(1, 3).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_1_content.Cell(1, 3).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_1_content.Cell(1, 3).Range.Font.Bold = 1;
+                    table_6_3_1_content.Cell(1, 3).Range.Text = "Original Value";
+
+                    for (int i = 0; i < value_list.Count; i++)
                     {
-                        table_6_3_1_content.Rows.Add();
+                        if (i > 0)
+                        {
+                            table_6_3_1_content.Rows.Add();
+                        }
+                        table_6_3_1_content.Cell(i + 2, 1).Width = 100;
+                        table_6_3_1_content.Cell(i + 2, 1).Range.Font.Bold = 0;
+                        table_6_3_1_content.Cell(i + 2, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_1_content.Cell(i + 2, 1).Range.Text = "알 수 없음";
+
+                        value_list[i][2].Replace("\n", "");
+                        table_6_3_1_content.Cell(i + 2, 2).Width = 150;
+                        table_6_3_1_content.Cell(i + 2, 2).Range.Font.Bold = 0;
+                        table_6_3_1_content.Cell(i + 2, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_1_content.Cell(i + 2, 2).Range.Text = value_list[i][2].Trim();
+
+                        value_list[i][3].Replace("\n", "");
+                        table_6_3_1_content.Cell(i + 2, 3).Width = 200;
+                        table_6_3_1_content.Cell(i + 2, 3).Range.Font.Bold = 0;
+                        table_6_3_1_content.Cell(i + 2, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_1_content.Cell(i + 2, 3).Range.Text = value_list[i][3].Trim();
                     }
-                    table_6_3_1_content.Cell(i + 2, 1).Width = 100;
-                    table_6_3_1_content.Cell(i + 2, 1).Range.Font.Bold = 0;
-                    table_6_3_1_content.Cell(i + 2, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_1_content.Cell(i + 2, 1).Range.Text = "알 수 없음";
+                    rng_table_6_3_1_content.InsertParagraphAfter();
 
-                    value_list[i][2].Replace("\n", "");
-                    table_6_3_1_content.Cell(i + 2, 2).Width = 150;
-                    table_6_3_1_content.Cell(i + 2, 2).Range.Font.Bold = 0;
-                    table_6_3_1_content.Cell(i + 2, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_1_content.Cell(i + 2, 2).Range.Text = value_list[i][2].Trim();
-
-                    value_list[i][3].Replace("\n", "");
-                    table_6_3_1_content.Cell(i + 2, 3).Width = 200;
-                    table_6_3_1_content.Cell(i + 2, 3).Range.Font.Bold = 0;
-                    table_6_3_1_content.Cell(i + 2, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_1_content.Cell(i + 2, 3).Range.Text = value_list[i][3].Trim();
+                    // space
+                    Word.Paragraph para_title_6_3_1_1 = word_doc.Paragraphs.Add(ref obj_miss);
+                    para_title_6_3_1_1.Range.Font.Bold = 0;
+                    para_title_6_3_1_1.Range.Font.Size = 10;
+                    para_title_6_3_1_1.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    para_title_6_3_1_1.Range.Text = "";
+                    para_title_6_3_1_1.Format.SpaceAfter = 10;
+                    para_title_6_3_1_1.Range.InsertParagraphAfter();
                 }
-                rng_table_6_3_1_content.InsertParagraphAfter();
 
-                // space
-                Word.Paragraph para_title_6_3_1_1 = word_doc.Paragraphs.Add(ref obj_miss);
-                para_title_6_3_1_1.Range.Font.Bold = 0;
-                para_title_6_3_1_1.Range.Font.Size = 10;
-                para_title_6_3_1_1.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                para_title_6_3_1_1.Range.Text = "";
-                para_title_6_3_1_1.Format.SpaceAfter = 10;
-                para_title_6_3_1_1.Range.InsertParagraphAfter();
-
-                Word.Paragraph para_title_6_3_2_content = word_doc.Paragraphs.Add(ref obj_miss);
-                para_title_6_3_2_content.Range.Font.Bold = 1;
-                para_title_6_3_2_content.Range.Font.Size = 10;
-                para_title_6_3_2_content.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                para_title_6_3_2_content.Range.Text = "Scan Result 2) Class 검색";
-                para_title_6_3_2_content.Format.SpaceAfter = 3;
-
-                // Class Table
-                Word.Table table_6_3_2_content;
-                Word.Range rng_table_6_3_2_content = word_doc.Bookmarks.get_Item(ref end_of_doc).Range;
-                table_6_3_2_content = word_doc.Tables.Add(rng_table_6_3_2_content, 2, 3, ref obj_miss, ref obj_miss);
-                table_6_3_2_content.Range.Font.Size = 8;
-                table_6_3_2_content.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                table_6_3_2_content.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
-                table_6_3_2_content.AllowAutoFit = false;
-
-                table_6_3_2_content.Cell(1, 1).Width = 200;
-                table_6_3_2_content.Cell(1, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_2_content.Cell(1, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_2_content.Cell(1, 1).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_2_content.Cell(1, 1).Range.Font.Bold = 1;
-                table_6_3_2_content.Cell(1, 1).Range.Text = "Class";
-
-                table_6_3_2_content.Cell(1, 2).Width = 150;
-                table_6_3_2_content.Cell(1, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_2_content.Cell(1, 2).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_2_content.Cell(1, 2).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_2_content.Cell(1, 2).Range.Font.Bold = 1;
-                table_6_3_2_content.Cell(1, 2).Range.Text = "Name";
-
-                table_6_3_2_content.Cell(1, 3).Width = 100;
-                table_6_3_2_content.Cell(1, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                table_6_3_2_content.Cell(1, 3).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
-                table_6_3_2_content.Cell(1, 3).Range.Font.Color = Word.WdColor.wdColorWhite;
-                table_6_3_2_content.Cell(1, 3).Range.Font.Bold = 1;
-                table_6_3_2_content.Cell(1, 3).Range.Text = "Address";
-
-                for (int i = 0; i < class_list.Count; i++)
+                if(class_list.Count > 0)
                 {
-                    if (i > 0)
+                    Word.Paragraph para_title_6_3_2_content = word_doc.Paragraphs.Add(ref obj_miss);
+                    para_title_6_3_2_content.Range.Font.Bold = 1;
+                    para_title_6_3_2_content.Range.Font.Size = 10;
+                    para_title_6_3_2_content.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    if(value_list.Count == 0) { para_title_6_3_2_content.Range.Text = "Scan Result 1) Class 검색"; }
+                    else { para_title_6_3_2_content.Range.Text = "Scan Result 2) Class 검색"; }
+                    para_title_6_3_2_content.Format.SpaceAfter = 3;
+
+                    // Class Table
+                    Word.Table table_6_3_2_content;
+                    Word.Range rng_table_6_3_2_content = word_doc.Bookmarks.get_Item(ref end_of_doc).Range;
+                    table_6_3_2_content = word_doc.Tables.Add(rng_table_6_3_2_content, 2, 3, ref obj_miss, ref obj_miss);
+                    table_6_3_2_content.Range.Font.Size = 8;
+                    table_6_3_2_content.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    table_6_3_2_content.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    table_6_3_2_content.AllowAutoFit = false;
+
+                    table_6_3_2_content.Cell(1, 1).Width = 200;
+                    table_6_3_2_content.Cell(1, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_2_content.Cell(1, 1).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_2_content.Cell(1, 1).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_2_content.Cell(1, 1).Range.Font.Bold = 1;
+                    table_6_3_2_content.Cell(1, 1).Range.Text = "Class";
+
+                    table_6_3_2_content.Cell(1, 2).Width = 150;
+                    table_6_3_2_content.Cell(1, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_2_content.Cell(1, 2).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_2_content.Cell(1, 2).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_2_content.Cell(1, 2).Range.Font.Bold = 1;
+                    table_6_3_2_content.Cell(1, 2).Range.Text = "Name";
+
+                    table_6_3_2_content.Cell(1, 3).Width = 100;
+                    table_6_3_2_content.Cell(1, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                    table_6_3_2_content.Cell(1, 3).Range.Shading.BackgroundPatternColor = Word.WdColor.wdColorBlueGray;
+                    table_6_3_2_content.Cell(1, 3).Range.Font.Color = Word.WdColor.wdColorWhite;
+                    table_6_3_2_content.Cell(1, 3).Range.Font.Bold = 1;
+                    table_6_3_2_content.Cell(1, 3).Range.Text = "Address";
+
+                    for (int i = 0; i < class_list.Count; i++)
                     {
-                        table_6_3_2_content.Rows.Add();
+                        if (i > 0)
+                        {
+                            table_6_3_2_content.Rows.Add();
+                        }
+                        class_list[i][1].Replace("\n", "");
+                        table_6_3_2_content.Cell(i + 2, 1).Width = 200;
+                        table_6_3_2_content.Cell(i + 2, 1).Range.Font.Bold = 0;
+                        table_6_3_2_content.Cell(i + 2, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_2_content.Cell(i + 2, 1).Range.Text = class_list[i][1].Trim();
+
+                        class_list[i][2].Replace("\n", "");
+                        table_6_3_2_content.Cell(i + 2, 2).Width = 150;
+                        table_6_3_2_content.Cell(i + 2, 2).Range.Font.Bold = 0;
+                        table_6_3_2_content.Cell(i + 2, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_2_content.Cell(i + 2, 2).Range.Text = class_list[i][2].Trim();
+
+                        class_list[i][3].Replace("\n", "");
+                        table_6_3_2_content.Cell(i + 2, 3).Width = 100;
+                        table_6_3_2_content.Cell(i + 2, 3).Range.Font.Bold = 0;
+                        table_6_3_2_content.Cell(i + 2, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        table_6_3_2_content.Cell(i + 2, 3).Range.Text = class_list[i][3].Trim();
                     }
-                    class_list[i][1].Replace("\n", "");
-                    table_6_3_2_content.Cell(i + 2, 1).Width = 200;
-                    table_6_3_2_content.Cell(i + 2, 1).Range.Font.Bold = 0;
-                    table_6_3_2_content.Cell(i + 2, 1).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_2_content.Cell(i + 2, 1).Range.Text = class_list[i][1].Trim();
+                    rng_table_6_3_2_content.InsertParagraphAfter();
 
-                    class_list[i][2].Replace("\n", "");
-                    table_6_3_2_content.Cell(i + 2, 2).Width = 150;
-                    table_6_3_2_content.Cell(i + 2, 2).Range.Font.Bold = 0;
-                    table_6_3_2_content.Cell(i + 2, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_2_content.Cell(i + 2, 2).Range.Text = class_list[i][2].Trim();
-
-                    class_list[i][3].Replace("\n", "");
-                    table_6_3_2_content.Cell(i + 2, 3).Width = 100;
-                    table_6_3_2_content.Cell(i + 2, 3).Range.Font.Bold = 0;
-                    table_6_3_2_content.Cell(i + 2, 3).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    table_6_3_2_content.Cell(i + 2, 3).Range.Text = class_list[i][3].Trim();
+                    // space
+                    Word.Paragraph para_title_6_3_3_1 = word_doc.Paragraphs.Add(ref obj_miss);
+                    para_title_6_3_3_1.Range.Font.Bold = 0;
+                    para_title_6_3_3_1.Range.Font.Size = 10;
+                    para_title_6_3_3_1.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    para_title_6_3_3_1.Range.Text = "";
+                    para_title_6_3_3_1.Format.SpaceAfter = 10;
+                    para_title_6_3_3_1.Range.InsertParagraphAfter();
                 }
-                rng_table_6_3_2_content.InsertParagraphAfter();
-
-                // space
-                Word.Paragraph para_title_6_3_3_1 = word_doc.Paragraphs.Add(ref obj_miss);
-                para_title_6_3_3_1.Range.Font.Bold = 0;
-                para_title_6_3_3_1.Range.Font.Size = 10;
-                para_title_6_3_3_1.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                para_title_6_3_3_1.Range.Text = "";
-                para_title_6_3_3_1.Format.SpaceAfter = 10;
-                para_title_6_3_3_1.Range.InsertParagraphAfter();
 
                 // title4 #6
                 Word.Paragraph para_title_6_4 = word_doc.Paragraphs.Add(ref obj_miss);
