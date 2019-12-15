@@ -2223,7 +2223,7 @@ namespace Dragon_Fist
                 if(T_status[i] == 1) { is_t_exist++; }
             }
 
-            if (is_t_exist > 0 && is_speed == 1)
+            if (is_t_exist > 0 && is_speed == 1 && time_report.Count > 0)
             {
                 // title #8
                 Word.Paragraph para_title_8_1 = word_doc.Paragraphs.Add(ref obj_miss);
@@ -2405,7 +2405,7 @@ namespace Dragon_Fist
                 if (R_status[i] == 1) { is_r_exist++; }
             }
 
-            if (is_r_exist > 0 && is_random == 1)
+            if (is_r_exist > 0 && is_random == 1 && rand_report.Count > 0)
             {
                 // title #9
                 Word.Paragraph para_title_9_1 = word_doc.Paragraphs.Add(ref obj_miss);
@@ -2488,11 +2488,11 @@ namespace Dragon_Fist
                 {
                     if(R_status[i] == 1) 
                     {
-                        if (i == 0) { r_f_list.Add("random_next"); }
-                        else if (i == 1) { r_f_list.Add("random_next_1"); }
-                        else if (i == 2) { r_f_list.Add("random_next_2"); }
-                        else if (i == 3) { r_f_list.Add("random_range_f"); }
-                        else if (i == 4) { r_f_list.Add("random_range_i"); }
+                        if (i == 0) { r_f_list.Add("Random.Next()"); }
+                        else if (i == 1) { r_f_list.Add("Random.Next(int maxValue)"); }
+                        else if (i == 2) { r_f_list.Add("Random.Next(int minValue, int maxValue)"); }
+                        else if (i == 3) { r_f_list.Add("float Random.Range(float min, float max)"); }
+                        else if (i == 4) { r_f_list.Add("int Random.Range(int min, int max)"); }
                     }
                 }
 
