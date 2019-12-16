@@ -25,6 +25,8 @@ namespace Dragon_Fist
         int is_ocr_runned = 0;
         int is_db_runned = 0;
         int is_mdf_ok = 0;
+        int is_searched = 0;
+        String search_result = null;
         String metadata_path = null;
         String apk_name = null;
         String changed_apk_name = null;
@@ -127,6 +129,28 @@ namespace Dragon_Fist
                     else { fm.Opacity = opacity[cnt++]; }
                 };
                 tm.Start();
+            }
+        }
+
+        private void Directory_Search(String dir, String file_name)
+        {
+            if(is_searched == 1) { return; }
+            String[] directories = Directory.GetDirectories(dir);
+            {
+                String[] files = Directory.GetFiles(dir);
+                for(int i = 0; i < files.Length; i++)
+                {
+                    if (files[i].Contains(file_name))
+                    {
+                        search_result = files[i];
+                        is_searched = 1;
+                        return;
+                    }
+                }
+                for(int i = 0; i < directories.Length; i++)
+                {
+                    Directory_Search(directories[i], file_name);
+                }
             }
         }
 
@@ -330,66 +354,47 @@ namespace Dragon_Fist
                         listView2.Items.Add("Success to Decompile this APK File");
                     }
 
-                    String tt_path = p;
-                    DirectoryInfo mono_dir = new DirectoryInfo(tt_path);
-                    if (mono_dir.Exists) // MONO Check
+                    // MONO Check
+                    Directory_Search(changed_path_name + "\\", "libmono.so");
+                    if (search_result != null)
                     {
-                        if(select_platform == "armv7")
+                        if (!File.Exists(manifest_path))
                         {
-                            tt_path += "armeabi-v7a\\libmono.so";
-                            if (File.Exists(tt_path))
+                            is_searched = 0; search_result = null;
+                            Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
+                            if(search_result != null)
                             {
-                                MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
-                                is_mono = 1;
+                                manifest_path = search_result;
                             }
-                        }
-                        else if(select_platform == "arm64")
-                        {
-                            tt_path += "arm64-v8a\\libmono.so";
-                            if (File.Exists(tt_path))
-                            {
-                                MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
-                                is_mono = 1;
-
-                            }
-                        }
-                        else if (select_platform == "x86")
-                        {
-                            tt_path += "x86\\libmono.so";
-                            if (File.Exists(tt_path))
-                            {
-                                MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
-                                is_mono = 1;
-                            }
-                        }
-                        if(is_mono == 1)
-                        {
-                            if (manifest_path == null)
+                            else
                             {
                                 MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                                 return;
                             }
-                            byte[] inputs2 = new byte[1000];
-                            inputs2 = File.ReadAllBytes(@manifest_path);
-                            String str2 = Encoding.Default.GetString(inputs2);
-                            String[] lines2 = str2.Split(' ');
-                            foreach (var line in lines2)
-                            {
-                                if (line.Contains("package="))
-                                {
-                                    String temp = line.Substring(9);
-                                    temp = temp.Replace("\"", "");
-                                    temp = temp.Replace("<", ""); temp = temp.Replace(">", "");
-                                    temp = temp.Replace("{", ""); temp = temp.Replace("}", "");
-                                    temp = temp.Replace("(", ""); temp = temp.Replace(")", "");
-                                    package_label.Text = temp; package_name = temp;
-                                    break;
-                                }
-                            }
-                            package_label.Visible = true;
-                            is_ok = 1;
-                            return;
                         }
+                        byte[] inputs2 = new byte[1000];
+                        inputs2 = File.ReadAllBytes(@manifest_path);
+                        String str2 = Encoding.Default.GetString(inputs2);
+                        String[] lines2 = str2.Split(' ');
+                        foreach (var line in lines2)
+                        {
+                            if (line.Contains("package="))
+                            {
+                                String temp = line.Substring(9);
+                                temp = temp.Replace("\"", "");
+                                temp = temp.Replace("<", ""); temp = temp.Replace(">", "");
+                                temp = temp.Replace("{", ""); temp = temp.Replace("}", "");
+                                temp = temp.Replace("(", ""); temp = temp.Replace(")", "");
+                                package_label.Text = temp; package_name = temp;
+                                break;
+                            }
+                        }
+                        MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
+                        is_searched = 0; search_result = null;
+                        package_label.Visible = true;
+                        is_ok = 1;
+                        is_mono = 1;
+                        return;
                     }
 
                     if(is_mono == 0)
@@ -426,29 +431,57 @@ namespace Dragon_Fist
                         }
 
                         // Find a libil2cpp.so
-                        String is_so_path = changed_path_name + so_path;
-                        if (File.Exists(is_so_path)) { is_so_file = 1; }
+                        libil2cpp_so_path = changed_path_name + so_path;
+                        if (File.Exists(libil2cpp_so_path)) { is_so_file = 1; }
                         else
                         {
-                            MessageBox.Show(this, "This APK is not builded by Unity", "Error");
-                            listView2.Items.Add("Fail to Decompile this APK File (not existed libil2cpp.so)"); return;
+                            Directory_Search(changed_path_name + "\\", "libil2cpp.so");
+                            if(search_result != null)
+                            {
+                                libil2cpp_so_path = search_result;
+                                is_so_file = 1;
+                            }
+                            else
+                            {
+                                MessageBox.Show(this, "This APK is not builded by Unity", "Error");
+                                listView2.Items.Add("Fail to Decompile this APK File (not existed libil2cpp.so)"); return;
+                            }
+                            is_searched = 0;
+                            search_result = null;
                         }
                         // if not exists, exit this function
 
                         // Find a global-metadata.dat
-                        String is_meta_path = changed_path_name + meta_path;
-                        if (File.Exists(is_meta_path)) { is_meta_file = 1; }
+                        metadata_path = changed_path_name + meta_path;
+                        if (File.Exists(metadata_path)) { is_meta_file = 1; }
                         else
                         {
-                            MessageBox.Show(this, "This APK is not builded by Unity", "Error");
-                            listView2.Items.Add("Fail to Decompile this APK File (not existed global-metadata.dat)"); return;
+                            Directory_Search(changed_path_name + "\\", "global-metadata.dat");
+                            if(search_result != null)
+                            {
+                                metadata_path = search_result;
+                                is_meta_file = 1;
+                            }
+                            else
+                            {
+                                Directory_Search(changed_path_name + "\\", "*.dat");
+                                if (search_result != null)
+                                {
+                                    metadata_path = search_result;
+                                    is_meta_file = 1;
+                                }
+                                else
+                                {
+                                    MessageBox.Show(this, "This APK is not builded by Unity", "Error");
+                                    listView2.Items.Add("Fail to Decompile this APK File (not existed global-metadata.dat)"); return;
+                                }
+                            }
+                            is_searched = 0;
+                            search_result = null;
                         }
                         // if no exists, exit this function
 
-                        libil2cpp_so_path = changed_path_name + so_path;
-                        metadata_path = changed_path_name + meta_path;
                         lev0_path = changed_path_name + level0_path;
-
                         bool isEqual = true;
                         byte[] sig = new byte[4]; // vs Signature
                         sig = File.ReadAllBytes(metadata_path);
@@ -484,8 +517,18 @@ namespace Dragon_Fist
                             }
                             else
                             {
-                                MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
-                                return;
+                                Directory_Search(changed_path_name + "\\", "level0");
+                                if (search_result != null)
+                                {
+                                    temp_lev0 = File.ReadAllBytes(search_result);
+                                }
+                                else
+                                {
+                                    MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
+                                    return;
+                                }
+                                is_searched = 0;
+                                search_result = null;
                             }
                         }
                         if (is_udr == 1)
@@ -512,10 +555,20 @@ namespace Dragon_Fist
                             MessageBox.Show(this, "Fail to dump apk\n\n" + il2.ToString(), "Error");
                         }
 
-                        if (manifest_path == null)
+                        if (!File.Exists(manifest_path))
                         {
-                            MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
-                            return;
+                            Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
+                            if(search_result != null)
+                            {
+                                manifest_path = search_result;
+                            }
+                            else
+                            {
+                                MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
+                                return;
+                            }
+                            is_searched = 0;
+                            search_result = null;
                         }
                         byte[] inputs = new byte[1000];
                         inputs = File.ReadAllBytes(@manifest_path);
