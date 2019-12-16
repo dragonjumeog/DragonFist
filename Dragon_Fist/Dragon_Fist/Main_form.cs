@@ -524,8 +524,17 @@ namespace Dragon_Fist
                                 }
                                 else
                                 {
-                                    MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
-                                    return;
+                                    Directory_Search(changed_path_name + "\\", "unity default resources");
+                                    if(search_result != null)
+                                    {
+                                        temp_lev0 = File.ReadAllBytes(search_result);
+                                        is_udr = 1;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(this, "[Error Code = 0x14]\n\nNot Found level0", "Error");
+                                        return;
+                                    }
                                 }
                                 is_searched = 0;
                                 search_result = null;
@@ -533,7 +542,7 @@ namespace Dragon_Fist
                         }
                         if (is_udr == 1)
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < 6; i++)
                             {
                                 lev0[i] = temp_lev0[20 + i];
                             }
@@ -547,7 +556,8 @@ namespace Dragon_Fist
                         }
 
                         level0 = Encoding.Default.GetString(lev0);
-                        //MessageBox.Show(this, level0, "Info");
+                        //level0 = level0.Substring(0, 6);
+                        //MessageBox.Show(this, level0 + "\n\n" + is_udr.ToString(), "Info");
                         try { il2cpp_dumper(libil2cpp_so_path, metadata_path, level0, changed_apk_name, original_path_name); }
                         catch (Exception il2)
                         {
