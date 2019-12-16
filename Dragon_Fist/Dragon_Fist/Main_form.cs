@@ -540,24 +540,16 @@ namespace Dragon_Fist
                                 search_result = null;
                             }
                         }
-                        if (is_udr == 1)
+
+                        for (int i = 0; i < 6; i++)
                         {
-                            for (int i = 0; i < 6; i++)
-                            {
-                                lev0[i] = temp_lev0[20 + i];
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < 6; i++)
-                            {
-                                lev0[i] = temp_lev0[20 + i];
-                            }
+                            lev0[i] = temp_lev0[20 + i];
                         }
 
                         level0 = Encoding.Default.GetString(lev0);
+                        level0 = level0.Trim();
                         //level0 = level0.Substring(0, 6);
-                        //MessageBox.Show(this, level0 + "\n\n" + is_udr.ToString(), "Info");
+                        //MessageBox.Show(this, level0, "Info");
                         try { il2cpp_dumper(libil2cpp_so_path, metadata_path, level0, changed_apk_name, original_path_name); }
                         catch (Exception il2)
                         {
