@@ -497,7 +497,6 @@ namespace Dragon_Fist
                         else { is_correct_sig = 0; } // listView2.Items.Add("Wrong Signature...");
 
                         byte[] temp_lev0 = new byte[25]; byte[] lev0 = new byte[6];
-                        int is_udr = 0;
                         if (File.Exists(lev0_path))
                         {
                             temp_lev0 = File.ReadAllBytes(lev0_path);
@@ -513,7 +512,6 @@ namespace Dragon_Fist
                             else if (File.Exists(udr_path))
                             {
                                 temp_lev0 = File.ReadAllBytes(udr_path);
-                                is_udr = 1;
                             }
                             else
                             {
@@ -528,7 +526,6 @@ namespace Dragon_Fist
                                     if(search_result != null)
                                     {
                                         temp_lev0 = File.ReadAllBytes(search_result);
-                                        is_udr = 1;
                                     }
                                     else
                                     {
