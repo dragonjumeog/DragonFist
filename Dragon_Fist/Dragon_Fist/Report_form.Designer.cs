@@ -364,7 +364,7 @@
             this.Name = "Report_form";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DragonFIst";
+            this.Text = "DragonFist";
             this.left_menu_panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -290,7 +290,7 @@
             this.Name = "Data_search_form";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DragonFIst";
+            this.Text = "DragonFist";
             this.Load += new System.EventHandler(this.DBsearch_form_Load);
             this.Shown += new System.EventHandler(this.DBsearch_form_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

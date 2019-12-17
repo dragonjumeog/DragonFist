@@ -227,7 +227,7 @@
             this.Name = "Metadata_form";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DragonFIst";
+            this.Text = "DragonFist";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Metadata_form_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();

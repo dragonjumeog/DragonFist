@@ -55,10 +55,10 @@
             this.listView2 = new System.Windows.Forms.ListView();
             this.package_label = new System.Windows.Forms.Label();
             this.dashboard_panel = new System.Windows.Forms.Panel();
+            this.button11 = new System.Windows.Forms.Button();
             this.listView3 = new System.Windows.Forms.ListView();
             this.button9 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.logo_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.left_menu_panel.SuspendLayout();
@@ -434,6 +434,23 @@
             this.dashboard_panel.Size = new System.Drawing.Size(821, 730);
             this.dashboard_panel.TabIndex = 1;
             // 
+            // button11
+            // 
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button11.Font = new System.Drawing.Font("Century Gothic", 10.8F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Location = new System.Drawing.Point(527, 99);
+            this.button11.Margin = new System.Windows.Forms.Padding(0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(294, 40);
+            this.button11.TabIndex = 67;
+            this.button11.Text = "Open APK folder";
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.MouseLeave += new System.EventHandler(this.button11_MouseLeave);
+            this.button11.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button11_MouseMove);
+            // 
             // listView3
             // 
             this.listView3.BackColor = System.Drawing.Color.Gainsboro;
@@ -480,23 +497,6 @@
             this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
             this.button1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button1_MouseMove);
             // 
-            // button11
-            // 
-            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.button11.Font = new System.Drawing.Font("Century Gothic", 10.8F);
-            this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Location = new System.Drawing.Point(527, 99);
-            this.button11.Margin = new System.Windows.Forms.Padding(0);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(294, 40);
-            this.button11.TabIndex = 67;
-            this.button11.Text = "Open APK folder";
-            this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            this.button11.MouseLeave += new System.EventHandler(this.button11_MouseLeave);
-            this.button11.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button11_MouseMove);
-            // 
             // Main_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -516,7 +516,7 @@
             this.MaximizeBox = false;
             this.Name = "Main_form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DragonFIst";
+            this.Text = "DragonFist";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_form_FormClosed);
             this.Load += new System.EventHandler(this.Main_form_Load);
             this.logo_panel.ResumeLayout(false);

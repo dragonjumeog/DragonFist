@@ -160,7 +160,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DragonFIst";
+            this.Text = "DragonFist";
             this.ResumeLayout(false);
             this.PerformLayout();
 
