@@ -134,11 +134,11 @@ namespace Dragon_Fist
 
         private void Directory_Search(String dir, String file_name)
         {
-            if(is_searched == 1) { return; }
+            if (is_searched == 1) { return; }
             String[] directories = Directory.GetDirectories(dir);
             {
                 String[] files = Directory.GetFiles(dir);
-                for(int i = 0; i < files.Length; i++)
+                for (int i = 0; i < files.Length; i++)
                 {
                     if (files[i].Contains(file_name))
                     {
@@ -147,7 +147,7 @@ namespace Dragon_Fist
                         return;
                     }
                 }
-                for(int i = 0; i < directories.Length; i++)
+                for (int i = 0; i < directories.Length; i++)
                 {
                     Directory_Search(directories[i], file_name);
                 }
@@ -227,7 +227,7 @@ namespace Dragon_Fist
             if (File.Exists(@Application.StartupPath + "\\Modules\\apktool\\apktool.bat"))
             {
                 ProcessStartInfo proInfo = Set_Process("cmd", path, false);
-                String cmd_str = "java -jar " + "\"" + @Application.StartupPath + "\\Modules\\apktool\\apktool.jar" + "\"" +  " d ";
+                String cmd_str = "java -jar " + "\"" + @Application.StartupPath + "\\Modules\\apktool\\apktool.jar" + "\"" + " d ";
                 cmd_str += "\"" + apk + "\""; cmd_str += " -f";
                 Run_process(proInfo, cmd_str, false);
             }
@@ -246,7 +246,8 @@ namespace Dragon_Fist
                 if (dir.Exists)
                 {
                     listView2.Items.Add("Already dumped");
-                    if (MessageBox.Show(this, "Do you want to dump again?", "Check", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                    if (MessageBox.Show(this, "Do you want to dump again?", "Check", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
                         dir.Delete(true);
                     }
                     else { return; }
@@ -368,7 +369,7 @@ namespace Dragon_Fist
                         {
                             is_searched = 0; search_result = null;
                             Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
-                            if(search_result != null)
+                            if (search_result != null)
                             {
                                 manifest_path = search_result;
                             }
@@ -403,7 +404,7 @@ namespace Dragon_Fist
                         return;
                     }
 
-                    if(is_mono == 0)
+                    if (is_mono == 0)
                     {
                         if (is_android_ARM64 == 1)
                         {
@@ -442,7 +443,7 @@ namespace Dragon_Fist
                         else
                         {
                             Directory_Search(changed_path_name + "\\", "libil2cpp.so");
-                            if(search_result != null)
+                            if (search_result != null)
                             {
                                 libil2cpp_so_path = search_result;
                                 is_so_file = 1;
@@ -463,7 +464,7 @@ namespace Dragon_Fist
                         else
                         {
                             Directory_Search(changed_path_name + "\\", "global-metadata.dat");
-                            if(search_result != null)
+                            if (search_result != null)
                             {
                                 metadata_path = search_result;
                                 is_meta_file = 1;
@@ -529,7 +530,7 @@ namespace Dragon_Fist
                                 else
                                 {
                                     Directory_Search(changed_path_name + "\\", "unity default resources");
-                                    if(search_result != null)
+                                    if (search_result != null)
                                     {
                                         temp_lev0 = File.ReadAllBytes(search_result);
                                     }
@@ -563,7 +564,7 @@ namespace Dragon_Fist
                         if (!File.Exists(manifest_path))
                         {
                             Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
-                            if(search_result != null)
+                            if (search_result != null)
                             {
                                 manifest_path = search_result;
                             }
@@ -659,7 +660,7 @@ namespace Dragon_Fist
                 this.Opacity = 0;
                 this.Visible = false;
                 Metadata_form Mdf = new Metadata_form(is_correct_sig, is_meta_file, package_name, select_platform);
-                if(Mdf.ShowDialog() == DialogResult.OK)
+                if (Mdf.ShowDialog() == DialogResult.OK)
                 {
                     is_click_md = Mdf.get_is_click_md();
                     is_mdf_ok = Mdf.get_is_mdf_ok();
@@ -758,7 +759,7 @@ namespace Dragon_Fist
                 }
 
                 try { meta_f_list = Df.get_meta_function_list(); }
-                catch(Exception df)
+                catch (Exception df)
                 {
                     listView2.Items.Add("Method_check form Error - get_is_meta_function_list()");
                     MessageBox.Show(this, "Method_check form Error\n\nget_is_meta_function_list()\n\n" + df.ToString(), "Error");
@@ -900,7 +901,7 @@ namespace Dragon_Fist
                     R_status = tf.get_R_status();
                     List<String> temp_items = new List<String>();
                     temp_items = tf.get_items();
-                    for(int i = 0; i < temp_items.Count; i++)
+                    for (int i = 0; i < temp_items.Count; i++)
                     {
                         if (!items.Contains(temp_items[i]))
                         {

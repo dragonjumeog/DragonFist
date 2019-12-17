@@ -254,10 +254,11 @@ namespace Dragon_Fist
 
             // apk name #1
             Word.Paragraph para_apk = word_doc.Paragraphs.Add(ref obj_miss);
-            para_apk.Range.Font.Size = 26;
+            para_apk.Range.Font.Size = 23;
             para_apk.Range.Font.Color = Word.WdColor.wdColorGray50;
             para_apk.Range.Font.Bold = 1;
             para_apk.Range.Text = apk_name;
+            para_apk.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
             para_apk.Format.SpaceAfter = 15;
             para_apk.Range.InsertParagraphAfter();
 
@@ -3475,20 +3476,6 @@ namespace Dragon_Fist
             StringBuilder SB = new StringBuilder();
             try
             {
-                if (meta_f_list.Count == 0) { return null; }
-                int m_cnt;
-                for(int i = 0; i < meta_f_list.Count; i++)
-                {
-                    for(int j = 0; j < meta_f_list.Count; j++)
-                    {
-                        m_cnt = 0;
-                        if (i != j)
-                        {
-                            if(meta_f_list[i][0] == meta_f_list[j][0]) { m_cnt++; }
-                        }
-                        if(m_cnt > 0) { meta_f_list.RemoveAt(j); }
-                    }
-                }
                 String[] lines = File.ReadAllLines(@dump_path + "dump.cs");
                 for (int i = 0; i < meta_f_list.Count; i++)
                 {
