@@ -304,6 +304,12 @@ namespace Dragon_Fist
                     apk_name = file_path.Split('\\')[file_path.Split('\\').Length - 1];
                     original_path_name = file_path.Replace(apk_name, "");
 
+                    if (apk_name.Contains("xapk"))
+                    {
+                        MessageBox.Show(this, "XAPK is not supported\n\nPlease use APK", "Info");
+                        return;
+                    }
+
                     changed_apk_name = apk_name.Replace(".apk", "");
                     changed_path_name = file_path.Replace(".apk", "");
 
