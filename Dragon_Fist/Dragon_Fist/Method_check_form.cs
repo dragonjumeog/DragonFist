@@ -418,6 +418,7 @@ namespace Dragon_Fist
         {
             hooking_list.Clear();
             listView4.Items.Clear();
+            meta_function_list.Clear();
             MessageBox.Show(this, "Success to reset list", "Info");
         }
 
