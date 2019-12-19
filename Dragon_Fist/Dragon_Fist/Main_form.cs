@@ -132,6 +132,44 @@ namespace Dragon_Fist
             }
         }
 
+        private void Find_Global_by_Sig(String dir)
+        {
+            if (is_searched == 1) { return; }
+            bool isEqual = true;
+            byte[] sig = new byte[4];
+            String[] directories = Directory.GetDirectories(dir);
+            {
+                String[] files = Directory.GetFiles(dir);
+                for (int i = 0; i < files.Length; i++)
+                {
+                    // Compare Signature
+                    sig = File.ReadAllBytes(files[i]);
+                    if(sig.Length >= 4)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (sig[j] != Signature[j])
+                            {
+                                isEqual = false;
+                                break;
+                            }
+                        }
+                        if (isEqual)
+                        {
+                            search_result = files[i];
+                            is_searched = 1;
+                            return;
+                        }
+                    }
+                }
+                for (int i = 0; i < directories.Length; i++)
+                {
+                    // Search again
+                    Find_Global_by_Sig(directories[i]);
+                }
+            }
+        }
+
         private void Directory_Search(String dir, String file_name)
         {
             if (is_searched == 1) { return; }
@@ -140,6 +178,7 @@ namespace Dragon_Fist
                 String[] files = Directory.GetFiles(dir);
                 for (int i = 0; i < files.Length; i++)
                 {
+                    // Compare file name(global-metadata.dat)
                     if (files[i].Contains(file_name))
                     {
                         search_result = files[i];
@@ -149,6 +188,7 @@ namespace Dragon_Fist
                 }
                 for (int i = 0; i < directories.Length; i++)
                 {
+                    // Search again
                     Directory_Search(directories[i], file_name);
                 }
             }
@@ -314,6 +354,13 @@ namespace Dragon_Fist
                     changed_apk_name = apk_name.Replace(".apk", "");
                     changed_path_name = file_path.Replace(".apk", "");
 
+                    DirectoryInfo cpn_dir = new DirectoryInfo(changed_path_name);
+                    if (!cpn_dir.Exists)
+                    {
+                        MessageBox.Show(this, changed_path_name + "\n\nThe decompiled directory is not found\n\nPlease check your APK folder", "Error");
+                        return;
+                    }
+
                     listView1.Items.Clear(); listView2.Items.Clear();
 
                     // Select Platform: ARMv7 | ARM64 | x86
@@ -437,7 +484,7 @@ namespace Dragon_Fist
                             }
                         }
 
-                        // Find a libil2cpp.so
+                        // Check libil2cpp.so
                         libil2cpp_so_path = changed_path_name + so_path;
                         if (File.Exists(libil2cpp_so_path)) { is_so_file = 1; }
                         else
@@ -450,19 +497,20 @@ namespace Dragon_Fist
                             }
                             else
                             {
-                                MessageBox.Show(this, "This APK is not builded by Unity", "Error");
-                                listView2.Items.Add("Fail to Decompile this APK File (not existed libil2cpp.so)"); return;
+                                MessageBox.Show(this, "Fail to Decompile this APK File, libil2cpp.so is not found", "Error");
+                                listView2.Items.Add("Fail to Decompile this APK File, libil2cpp.so is not found"); return;
                             }
                             is_searched = 0;
                             search_result = null;
                         }
                         // if not exists, exit this function
 
-                        // Find a global-metadata.dat
+                        // Check global-metadata.dat
                         metadata_path = changed_path_name + meta_path;
                         if (File.Exists(metadata_path)) { is_meta_file = 1; }
                         else
                         {
+                            // 1. Find global-matadata.dat at the absolute path
                             Directory_Search(changed_path_name + "\\", "global-metadata.dat");
                             if (search_result != null)
                             {
@@ -471,6 +519,7 @@ namespace Dragon_Fist
                             }
                             else
                             {
+                                // 2. Find global-matadata.dat in other directories
                                 Directory_Search(changed_path_name + "\\", "*.dat");
                                 if (search_result != null)
                                 {
@@ -479,18 +528,27 @@ namespace Dragon_Fist
                                 }
                                 else
                                 {
-                                    MessageBox.Show(this, "This APK is not builded by Unity", "Error");
-                                    listView2.Items.Add("Fail to Decompile this APK File (not existed global-metadata.dat)"); return;
+                                    // 3. Find metadata by signature
+                                    Find_Global_by_Sig(changed_path_name + "\\");
+                                    if(search_result != null)
+                                    {
+                                        metadata_path = search_result;
+                                        is_meta_file = 1;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show(this, "This APK is not builded by Unity", "Error");
+                                        listView2.Items.Add("Fail to decompile this APK File, metadata file is not found"); return;
+                                    }
                                 }
                             }
                             is_searched = 0;
                             search_result = null;
                         }
-                        // if no exists, exit this function
 
-                        lev0_path = changed_path_name + level0_path;
+                        // Check signature
                         bool isEqual = true;
-                        byte[] sig = new byte[4]; // vs Signature
+                        byte[] sig = new byte[4];
                         sig = File.ReadAllBytes(metadata_path);
                         for (int i = 0; i < 4; i++)
                         {
@@ -500,9 +558,11 @@ namespace Dragon_Fist
                                 break;
                             }
                         }
-                        if (isEqual) { is_correct_sig = 1; } // listView2.Items.Add("Correct Signature!");
-                        else { is_correct_sig = 0; } // listView2.Items.Add("Wrong Signature...");
+                        if (isEqual) { is_correct_sig = 1; }
+                        else { is_correct_sig = 0; }
 
+                        // Check level0
+                        lev0_path = changed_path_name + level0_path;
                         byte[] temp_lev0 = new byte[25]; byte[] lev0 = new byte[6];
                         if (File.Exists(lev0_path))
                         {
@@ -552,8 +612,6 @@ namespace Dragon_Fist
 
                         level0 = Encoding.Default.GetString(lev0);
                         level0 = level0.Trim();
-                        //level0 = level0.Substring(0, 6);
-                        //MessageBox.Show(this, level0, "Info");
                         try { il2cpp_dumper(libil2cpp_so_path, metadata_path, level0, changed_apk_name, original_path_name); }
                         catch (Exception il2)
                         {
@@ -561,6 +619,7 @@ namespace Dragon_Fist
                             MessageBox.Show(this, "Fail to dump apk\n\n" + il2.ToString(), "Error");
                         }
 
+                        // Check AndroidManifes.xml
                         if (!File.Exists(manifest_path))
                         {
                             Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
