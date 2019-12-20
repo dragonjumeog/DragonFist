@@ -75,7 +75,7 @@
             this.button4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.button4.Font = new System.Drawing.Font("Century Gothic", 10.8F);
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(1191, 92);
+            this.button4.Location = new System.Drawing.Point(1191, 37);
             this.button4.Margin = new System.Windows.Forms.Padding(0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(110, 40);
@@ -163,10 +163,10 @@
             this.listView3.BackColor = System.Drawing.Color.LightGray;
             this.listView3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView3.HideSelection = false;
-            this.listView3.Location = new System.Drawing.Point(947, 150);
+            this.listView3.Location = new System.Drawing.Point(947, 92);
             this.listView3.Margin = new System.Windows.Forms.Padding(0);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(354, 656);
+            this.listView3.Size = new System.Drawing.Size(354, 714);
             this.listView3.TabIndex = 63;
             this.listView3.UseCompatibleStateImageBehavior = false;
             // 
@@ -176,7 +176,7 @@
             this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.button1.Font = new System.Drawing.Font("Century Gothic", 10.8F);
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(947, 92);
+            this.button1.Location = new System.Drawing.Point(947, 37);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(110, 40);
@@ -193,7 +193,7 @@
             this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.button2.Font = new System.Drawing.Font("Century Gothic", 10.8F);
             this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(1069, 92);
+            this.button2.Location = new System.Drawing.Point(1069, 37);
             this.button2.Margin = new System.Windows.Forms.Padding(0);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(110, 40);
