@@ -132,6 +132,11 @@ namespace Dragon_Fist
             }
         }
 
+        private void Reset_Search()
+        {
+            is_searched = 0; search_result = null;
+        }
+
         private void Find_Global_by_Sig(String dir)
         {
             if (is_searched == 1) { return; }
@@ -354,13 +359,6 @@ namespace Dragon_Fist
                     changed_apk_name = apk_name.Replace(".apk", "");
                     changed_path_name = file_path.Replace(".apk", "");
 
-                    DirectoryInfo cpn_dir = new DirectoryInfo(changed_path_name);
-                    if (!cpn_dir.Exists)
-                    {
-                        MessageBox.Show(this, changed_path_name + "\n\nThe decompiled directory is not found\n\nPlease check your APK folder", "Error");
-                        return;
-                    }
-
                     listView1.Items.Clear(); listView2.Items.Clear();
 
                     // Select Platform: ARMv7 | ARM64 | x86
@@ -408,48 +406,66 @@ namespace Dragon_Fist
                         listView2.Items.Add("Success to Decompile this APK File");
                     }
 
-                    // MONO Check
-                    Directory_Search(changed_path_name + "\\", "libmono.so");
-                    if (search_result != null)
+                    DirectoryInfo cpn_dir = new DirectoryInfo(changed_path_name);
+                    if (!cpn_dir.Exists)
                     {
-                        if (!File.Exists(manifest_path))
-                        {
-                            is_searched = 0; search_result = null;
-                            Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
-                            if (search_result != null)
-                            {
-                                manifest_path = search_result;
-                            }
-                            else
-                            {
-                                MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
-                                return;
-                            }
-                        }
-                        byte[] inputs2 = new byte[1000];
-                        inputs2 = File.ReadAllBytes(@manifest_path);
-                        String str2 = Encoding.Default.GetString(inputs2);
-                        String[] lines2 = str2.Split(' ');
-                        foreach (var line in lines2)
-                        {
-                            if (line.Contains("package="))
-                            {
-                                String temp = line.Substring(9);
-                                temp = temp.Replace("\"", "");
-                                temp = temp.Replace("<", ""); temp = temp.Replace(">", "");
-                                temp = temp.Replace("{", ""); temp = temp.Replace("}", "");
-                                temp = temp.Replace("(", ""); temp = temp.Replace(")", "");
-                                package_label.Text = temp; package_name = temp;
-                                break;
-                            }
-                        }
-                        MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
-                        is_searched = 0; search_result = null;
-                        package_label.Visible = true;
-                        is_ok = 1;
-                        is_mono = 1;
+                        MessageBox.Show(this, changed_path_name + "\n\nThe decompiled directory is not found or wrong\n\nPlease check your APK folder\n\nThe folder name must be equal to the APK name(except .apk)", "Error");
                         return;
                     }
+
+                    // Il2CPP Check First
+                    Directory_Search(changed_path_name + "\\", "libil2cpp.so");
+                    if(search_result == null)
+                    {
+                        // MONO Check
+                        Directory_Search(changed_path_name + "\\", "libmono.so");
+                        if (search_result != null)
+                        {
+                            if (!File.Exists(manifest_path))
+                            {
+                                Reset_Search();
+                                Directory_Search(changed_path_name + "\\", "AndroidManifest.xml");
+                                if (search_result != null)
+                                {
+                                    manifest_path = search_result;
+                                }
+                                else
+                                {
+                                    MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
+                                    return;
+                                }
+                            }
+                            byte[] inputs2 = new byte[1000];
+                            inputs2 = File.ReadAllBytes(@manifest_path);
+                            String str2 = Encoding.Default.GetString(inputs2);
+                            String[] lines2 = str2.Split(' ');
+                            foreach (var line in lines2)
+                            {
+                                if (line.Contains("package="))
+                                {
+                                    String temp = line.Substring(9);
+                                    temp = temp.Replace("\"", "");
+                                    temp = temp.Replace("<", ""); temp = temp.Replace(">", "");
+                                    temp = temp.Replace("{", ""); temp = temp.Replace("}", "");
+                                    temp = temp.Replace("(", ""); temp = temp.Replace(")", "");
+                                    package_label.Text = temp; package_name = temp;
+                                    break;
+                                }
+                            }
+                            MessageBox.Show(this, "Open Mono APK\nYou can use\nTime\nData search\nReport", "Info");
+                            Reset_Search();
+                            package_label.Visible = true;
+                            is_ok = 1;
+                            is_mono = 1;
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show(this, "This APK is not builded by Unity", "Error");
+                            listView2.Items.Add("Fail to find so file(mono, il2cpp)\n\nThis APK is not builded by Unity"); return;
+                        }
+                    }
+                    Reset_Search();
 
                     if (is_mono == 0)
                     {
@@ -500,8 +516,7 @@ namespace Dragon_Fist
                                 MessageBox.Show(this, "Fail to Decompile this APK File, libil2cpp.so is not found", "Error");
                                 listView2.Items.Add("Fail to Decompile this APK File, libil2cpp.so is not found"); return;
                             }
-                            is_searched = 0;
-                            search_result = null;
+                            Reset_Search();
                         }
                         // if not exists, exit this function
 
@@ -542,8 +557,7 @@ namespace Dragon_Fist
                                     }
                                 }
                             }
-                            is_searched = 0;
-                            search_result = null;
+                            Reset_Search();
                         }
 
                         // Check signature
@@ -600,8 +614,7 @@ namespace Dragon_Fist
                                         return;
                                     }
                                 }
-                                is_searched = 0;
-                                search_result = null;
+                                Reset_Search();
                             }
                         }
 
@@ -632,8 +645,7 @@ namespace Dragon_Fist
                                 MessageBox.Show(this, "[Error Code = 0x13]\n\nAndroidManifest.xml path ERROR\n\nPlease check AndroidManifest.xml", "Error");
                                 return;
                             }
-                            is_searched = 0;
-                            search_result = null;
+                            Reset_Search();
                         }
                         byte[] inputs = new byte[1000];
                         inputs = File.ReadAllBytes(@manifest_path);
