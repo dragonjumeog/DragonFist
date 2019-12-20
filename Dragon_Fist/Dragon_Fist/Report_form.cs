@@ -1964,7 +1964,7 @@ namespace Dragon_Fist
 
                 // title8 #6
                 Word.Paragraph para_title_6_8 = word_doc.Paragraphs.Add(ref obj_miss);
-                para_title_6_8.Range.Text = "Guide 4) 로드된 DLL 주기적 검증";
+                para_title_6_8.Range.Text = "Guide 4) 로드된 라이브러리 주기적 검증";
                 para_title_6_8.Range.Font.Bold = 1;
                 para_title_6_8.Range.Font.Size = 10;
                 para_title_6_8.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
@@ -1976,7 +1976,7 @@ namespace Dragon_Fist
                 para_title_6_8_content.Range.Font.Bold = 0;
                 para_title_6_8_content.Range.Font.Size = 10;
                 para_title_6_8_content.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
-                para_title_6_8_content.Range.Text = " 주기적으로 게임 프로세스 메모리 내에 로드되어 있는 DLL을 체크하는 방법이다. 본래 사용되는DLL의 경우에는 해시값을 통해 무결성을 검증하도록 하고, 이외의 DLL 삽입에 대해서는 에러 처리를 하는 것이 바람직하다.\n";
+                para_title_6_8_content.Range.Text = " 주기적으로 게임 프로세스 메모리 내에 로드되어 있는 라이브러리를 체크하는 방법이다. 본래 사용되는 라이브러리의 경우에는 해시값을 통해 무결성을 검증하도록 하고, 이외의 라이브러리 삽입에 대해서는 에러 처리를 하는 것이 바람직하다.\n";
                 para_title_6_8_content.Format.SpaceAfter = 10;
                 para_title_6_8_content.Range.InsertParagraphAfter();
 
@@ -2471,7 +2471,6 @@ namespace Dragon_Fist
                 table_9_3_content.Cell(1, 1).Range.Font.Color = Word.WdColor.wdColorWhite;
                 table_9_3_content.Cell(1, 1).Range.Font.Bold = 1;
                 table_9_3_content.Cell(1, 1).Range.Text = "Function";
-                table_9_3_content.Cell(1, 1).Range.Text = table_9_3_content.Cell(1, 1).Range.Text.Replace("\n", "").Trim();
 
                 table_9_3_content.Cell(1, 2).Width = 100;
                 table_9_3_content.Cell(1, 2).Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
