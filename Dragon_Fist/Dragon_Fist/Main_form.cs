@@ -360,6 +360,7 @@ namespace Dragon_Fist
                     changed_path_name = file_path.Replace(".apk", "");
 
                     listView1.Items.Clear(); listView2.Items.Clear();
+                    is_ok = 0;
 
                     // Select Platform: ARMv7 | ARM64 | x86
                     Select_platform Sf = new Select_platform();
@@ -402,6 +403,7 @@ namespace Dragon_Fist
                         {
                             listView2.Items.Add("Fail to decompile apk");
                             MessageBox.Show(this, "Fail to decompile apk\n\n" + d1.ToString(), "Error");
+                            return;
                         }
                         listView2.Items.Add("Success to Decompile this APK File");
                     }
@@ -630,6 +632,7 @@ namespace Dragon_Fist
                         {
                             listView2.Items.Add("Fail to dump apk");
                             MessageBox.Show(this, "Fail to dump apk\n\n" + il2.ToString(), "Error");
+                            return;
                         }
 
                         // Check AndroidManifes.xml
