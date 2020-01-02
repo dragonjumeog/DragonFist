@@ -345,7 +345,6 @@ namespace Dragon_Fist
             {
                 if (of.FileName.Length > 0)
                 {
-                    is_mono = 0;
                     file_path = of.FileName;
                     apk_name = file_path.Split('\\')[file_path.Split('\\').Length - 1];
                     original_path_name = file_path.Replace(apk_name, "");
@@ -360,7 +359,7 @@ namespace Dragon_Fist
                     changed_path_name = file_path.Replace(".apk", "");
 
                     listView1.Items.Clear(); listView2.Items.Clear();
-                    is_ok = 0;
+                    is_ok = 0; is_mono = 0;
 
                     // Select Platform: ARMv7 | ARM64 | x86
                     Select_platform Sf = new Select_platform();
